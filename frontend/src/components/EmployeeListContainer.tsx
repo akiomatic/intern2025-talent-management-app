@@ -54,8 +54,8 @@ export function EmployeeListContainer({ filterText, layout, sortKey }: Employees
           return a.name.localeCompare(b.name) * order;
         case "age":
           return (a.age - b.age) * order;
-        // case "skills":
-        //   return (a.skills.length - b.skills.length) * order;
+        case "skills":
+          return (a.skills.length - b.skills.length) * order;
         default:
           return 0;
       }
