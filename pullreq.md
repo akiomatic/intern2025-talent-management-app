@@ -1,3 +1,9 @@
+<!-- タイトル
+● タイトルフォーマット Task <N>: <Title of your change> とします。
+● <N> 部分に SpreadSheet 上課題番号を含めてください。
+「氏名部分検索」を担当する場合例：
+Task 1: Implement partial match search on a name -->
+
 ## 📝 概要
 
 <!-- このプルリクエストの目的や背景を簡潔に記載してください -->
