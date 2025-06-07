@@ -5,9 +5,12 @@ import * as t from "io-ts";
 import { isLeft } from "fp-ts/Either";
 import { EmployeeListItem } from "./EmployeeListItem";
 import { Employee, EmployeeT } from "../models/Employee";
+import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
+import { Grid } from "@mui/material";
 
 export type EmployeesContainerProps = {
   filterText: string;
+  layout: EmployeeListLayout;
 };
 
 const EmployeesT = t.array(EmployeeT);
@@ -25,7 +28,7 @@ const employeesFetcher = async (url: string): Promise<Employee[]> => {
   return decoded.right;
 };
 
-export function EmployeeListContainer({ filterText }: EmployeesContainerProps) {
+export function EmployeeListContainer({ filterText, layout }: EmployeesContainerProps) {
   const encodedFilterText = encodeURIComponent(filterText);
   const { data, error, isLoading } = useSWR<Employee[], Error>(
     `/api/employees?filterText=${encodedFilterText}`,
@@ -37,9 +40,21 @@ export function EmployeeListContainer({ filterText }: EmployeesContainerProps) {
     }
   }, [error, filterText]);
   if (data != null) {
-    return data.map((employee) => (
-      <EmployeeListItem employee={employee} key={employee.id} />
-    ));
+    if (layout === "list") {
+      return data.map((employee) => (
+        <EmployeeListItem employee={employee} key={employee.id} />
+      ));   
+    }
+
+    return (
+      <Grid container spacing={2}>
+        {data.map((employee) => (
+          <Grid key={employee.id} size={{ xs: 6, md: 4 }}>
+            <EmployeeListItem employee={employee} />
+          </Grid>
+        ))}
+      </Grid>
+    );
   }
   if (isLoading) {
     return <p>Loading employees...</p>;
