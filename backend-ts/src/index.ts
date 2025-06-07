@@ -5,6 +5,8 @@ const app = express();
 const port = process.env.PORT ?? 8080;
 const database = new EmployeeDatabaseInMemory();
 
+app.use(express.json()); 
+
 app.get("/api/employees", async (req: Request, res: Response) => {
     const filterText = req.query.filterText ?? "";
     // req.query is parsed by the qs module.
@@ -39,6 +41,22 @@ app.get("/api/employees/:userId", async (req: Request, res: Response) => {
         res.status(200).send(JSON.stringify(employee));
     } catch (e) {
         console.error(`Failed to load the user ${userId}.`, e);
+        res.status(500).send();
+    }
+});
+
+app.post("/api/employees", async (req: Request, res: Response) => {
+    try {
+        // req.bodyにフロントエンドから送信されたJSONデータが入る
+        const newEmployeeData = req.body;
+
+        // バリデーションをここで行うことも可能（今回は省略）
+
+        const createdEmployee = await database.createEmployee(newEmployeeData);
+        // 成功した場合、ステータスコード201(Created)と作成されたデータを返す
+        res.status(201).send(JSON.stringify(createdEmployee));
+    } catch (e) {
+        console.error(`Failed to create an employee.`, e);
         res.status(500).send();
     }
 });
