@@ -1,0 +1,1 @@
+export type EmployeeListLayout = "list" | "card";

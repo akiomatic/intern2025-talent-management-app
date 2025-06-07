@@ -2,6 +2,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Avatar, Box, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { Employee } from "../models/Employee";
 import { useCallback, useState } from "react";
+import { Chip } from "@mui/material";
 
 const tabPanelValue = {
   basicInfo: "基本情報",
@@ -81,6 +82,25 @@ export function EmployeeDetails(prop: EmployeeDetailsProps) {
         <TabContent value={"others"} selectedValue={selectedTabValue}>
           <Box p={2} display="flex" flexDirection="column" gap={1}>
             <Typography variant="h6">その他</Typography>
+            <Box>
+              <Typography variant="h6">スキル</Typography>
+              {employee.skills && employee.skills.length > 0 ? (
+                <Box display="flex" flexWrap="wrap" gap={1} mt={1}>
+                  {employee.skills.map((skill) => (
+                    <Chip
+                      key={skill}
+                      label={skill}
+                      color="primary"
+                      variant="outlined"
+                    />
+                  ))}
+                </Box>
+              ) : (
+                <Typography variant="body2" color="textSecondary" mt={1}>
+                  登録されているスキルはありません。
+                </Typography>
+              )}
+            </Box>
           </Box>
         </TabContent>
       </Box>

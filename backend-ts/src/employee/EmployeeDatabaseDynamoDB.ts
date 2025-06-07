@@ -34,6 +34,7 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
       id: id,
       name: item["name"].S,
       age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
+      skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
     };
     const decoded = EmployeeT.decode(employee);
     if (isLeft(decoded)) {
@@ -64,6 +65,7 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
           id: item["id"].S,
           name: item["name"].S,
           age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
+          skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
         };
       })
       .flatMap((employee) => {
