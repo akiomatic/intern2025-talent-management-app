@@ -36,6 +36,7 @@ export function SearchEmployees() {
       <EmployeeListContainer
         key="employeesContainer"
         filterText={searchKeyword}
+        layout={layout}
       />
     </Paper>
   );
