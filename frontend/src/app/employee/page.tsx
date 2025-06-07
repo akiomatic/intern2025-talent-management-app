@@ -9,7 +9,13 @@ export const metadata: Metadata = {
 
 export default function EmployeePage() {
   return (
-    <GlobalContainer pageTitle="社員詳細">
+    <GlobalContainer
+      pageTitle="社員詳細"
+      breadcrumbs={[
+        { label: "社員検索", href: "/", icon: "🏠" },
+        { label: "社員詳細" },
+      ]}
+    >
       {/* Mark EmployeeDetailsContainer as CSR */}
       <Suspense>
         <EmployeeDetailsContainer />
