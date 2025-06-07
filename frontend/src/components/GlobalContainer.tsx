@@ -3,13 +3,27 @@ import { VerticalSpacer } from "../components/VerticalSpacer";
 import { GlobalHeader } from "../components/GlobalHeader";
 import { GlobalFooter } from "../components/GlobalFooter";
 import React from "react";
+import { Breadcrumbs, Typography, Link as MuiLink } from "@mui/material";
+import Link from "next/link";
+import HomeIcon from "@mui/icons-material/Home";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  icon?: React.ReactNode;
+}
 
 interface GlobalContainerProps {
   children?: React.ReactNode;
   pageTitle?: string;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-export function GlobalContainer({ children, pageTitle }: GlobalContainerProps) {
+export function GlobalContainer({
+  children,
+  pageTitle,
+  breadcrumbs,
+}: GlobalContainerProps) {
   return (
     <Container
       sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
@@ -20,6 +34,26 @@ export function GlobalContainer({ children, pageTitle }: GlobalContainerProps) {
           pageTitle={pageTitle}
         />
       </header>
+
+      {/* パンくずリスト */}
+      {breadcrumbs && (
+        <div style={{ margin: "16px" }}>
+          {breadcrumbs.map((item, index) => (
+            <span key={index}>
+              {item.href ? (
+                <Link href={item.href}>
+                  {item.icon} {item.label}
+                </Link>
+              ) : (
+                <span>
+                  {item.icon} {item.label}
+                </span>
+              )}
+              {index < breadcrumbs.length - 1 && " > "}
+            </span>
+          ))}
+        </div>
+      )}
 
       <VerticalSpacer height={32} />
 
