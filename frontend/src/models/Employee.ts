@@ -4,6 +4,7 @@ export const EmployeeT = t.type({
   id: t.string,
   name: t.string,
   age: t.number,
+  skills: t.array(t.string),
 });
 
 export type Employee = t.TypeOf<typeof EmployeeT>;
