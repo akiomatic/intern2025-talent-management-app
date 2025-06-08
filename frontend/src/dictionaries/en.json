@@ -1,5 +1,14 @@
 {
-    "products": {
-      "cart": "Add to Cart"
+  "global": {
+    "title": "Talent Management System",
+    "description": "Simple Talent Management System"
+  },
+  "page": {
+    "home": {
+      "title": "Employee Search"
+    },
+    "employee": {
+      "title": "Employee Details"
     }
+  }
 }

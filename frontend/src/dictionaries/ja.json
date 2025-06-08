@@ -1,5 +1,15 @@
 {
-    "products": {
-      "cart": "Add to Cart"
+  "global": {
+    "title": "タレントマネジメントシステム",
+    "description": "シンプルなタレントマネジメントシステム"
+  },
+  "page": {
+    "home": {
+      "title": "社員検索"
+    },
+    "employee": {
+      "title": "社員詳細"
+      
     }
+  }
 }
