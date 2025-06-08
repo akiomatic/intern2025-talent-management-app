@@ -1,7 +1,11 @@
 {
   "global": {
     "title": "タレントマネジメントシステム",
-    "description": "シンプルなタレントマネジメントシステム"
+    "description": "シンプルなタレントマネジメントシステム",
+    "footer": {
+      "internship": "インターンシップ",
+      "engineerRecruitment": "エンジニア採用"
+    }
   },
   "page": {
     "home": {

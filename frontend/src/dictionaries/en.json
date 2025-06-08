@@ -1,7 +1,11 @@
 {
   "global": {
     "title": "Talent Management System",
-    "description": "Simple Talent Management System"
+    "description": "Simple Talent Management System",
+    "footer": {
+      "internship": "Internship",
+      "engineerRecruitment": "Engineer Recruitment"
+    }
   },
   "page": {
     "home": {
