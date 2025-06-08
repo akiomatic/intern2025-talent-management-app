@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -40,6 +40,11 @@ export function DetailedFilterModal({
   const [selectedSkills, setSelectedSkills] = useState<string[]>(
     initialFilters.skills ?? []
   );
+
+  useEffect(() => {
+    setAgeRange([initialFilters.minAge ?? 20, initialFilters.maxAge ?? 60]);
+    setSelectedSkills(initialFilters.skills ?? []);
+  }, [initialFilters]);
 
   const handleAgeChange = (event: Event, newValue: number | number[]) => {
     setAgeRange(newValue as number[]);
