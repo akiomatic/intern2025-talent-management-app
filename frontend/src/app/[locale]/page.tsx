@@ -38,7 +38,7 @@ export default async function Home({
   return (
     <GlobalContainer
       pageTitle={t("title")}
-      breadcrumbs={[{ label: "社員検索", icon: "🏠" }]}
+      breadcrumbs={[{ label: t("title"), icon: "🏠" }]}
       locale={locale}
     >
       <SearchEmployees />

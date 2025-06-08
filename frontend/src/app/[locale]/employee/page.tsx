@@ -31,13 +31,13 @@ export default async function EmployeePage({
   params, 
 }: EmployeePageProps) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "page.employee" });
+  const t = await getTranslations({ locale, namespace: "page" });
   return (
     <GlobalContainer
-      pageTitle={t("title")}
+      pageTitle={t("employee.title")}
       breadcrumbs={[
-        { label: "社員検索", href: "/", icon: "🏠" },
-        { label: "社員詳細" },
+        { label: t("home.title"), href: "/", icon: "🏠" },
+        { label: t("employee.title") },
       ]}
       locale={locale}
     >
