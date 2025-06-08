@@ -7,6 +7,7 @@ import { EmployeeListItem } from "./EmployeeListItem";
 import { Employee, EmployeeT } from "../models/Employee";
 import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
 import { Grid } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 export type EmployeesContainerProps = {
   filterText: string;
@@ -29,6 +30,7 @@ const employeesFetcher = async (url: string): Promise<Employee[]> => {
 };
 
 export function EmployeeListContainer({ filterText, layout }: EmployeesContainerProps) {
+  const t = useTranslations("page.home");
   const encodedFilterText = encodeURIComponent(filterText);
   const { data, error, isLoading } = useSWR<Employee[], Error>(
     `/api/employees?filterText=${encodedFilterText}`,
@@ -57,6 +59,6 @@ export function EmployeeListContainer({ filterText, layout }: EmployeesContainer
     );
   }
   if (isLoading) {
-    return <p>Loading employees...</p>;
+    return <p>{t("loading")}</p>;
   }
 }

@@ -10,10 +10,13 @@
       "layout": {
         "list": "List",
         "card": "Card"
-      }
+      },
+      "loading": "Loading employees..."
     },
     "employee": {
-      "title": "Employee Details"
+      "title": "Employee Details",
+      "loading": "Loading employee {id}...",
+      "error": "Failed to load employee {id}: {error}"
     }
   }
 }
