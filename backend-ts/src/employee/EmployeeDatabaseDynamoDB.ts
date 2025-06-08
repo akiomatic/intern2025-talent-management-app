@@ -8,10 +8,10 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { isLeft } from "fp-ts/Either";
 import { EmployeeDatabase } from "./EmployeeDatabase";
-import { Employee, EmployeeT } from "./Employee";
+import { Employee, EmployeeT, EmployeeFilters } from "./Employee";
 import { randomUUID } from "crypto";
 
-type EmployeeCreationData = Omit<Employee, 'id'>;
+type EmployeeCreationData = Omit<Employee, "id">;
 
 export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
   private client: DynamoDBClient;
@@ -97,7 +97,7 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
         id: { S: newEmployee.id },
         name: { S: newEmployee.name },
         age: { N: newEmployee.age.toString() },
-        skills: { L: newEmployee.skills.map(skill => ({ S: skill })) },
+        skills: { L: newEmployee.skills.map((skill) => ({ S: skill })) },
       },
     };
 
@@ -105,6 +105,66 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
     await this.client.send(command);
 
     return newEmployee;
+  }
+
+  async getEmployeesFiltered(filters: EmployeeFilters): Promise<Employee[]> {
+    const input: ScanCommandInput = {
+      TableName: this.tableName,
+    };
+    const output = await this.client.send(new ScanCommand(input));
+    const items = output.Items;
+    if (items == null) {
+      return [];
+    }
+
+    return items
+      .map((item) => {
+        return {
+          id: item["id"].S,
+          name: item["name"].S,
+          age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
+          skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
+        };
+      })
+      .flatMap((employee) => {
+        const decoded = EmployeeT.decode(employee);
+        if (isLeft(decoded)) {
+          console.error(
+            `Employee ${
+              employee.id
+            } is missing some fields and skipped. ${JSON.stringify(employee)}`
+          );
+          return [];
+        } else {
+          return [decoded.right];
+        }
+      })
+      .filter((employee) => {
+        // 名前フィルター
+        if (filters.name && !employee.name.includes(filters.name)) {
+          return false;
+        }
+
+        // 年齢フィルター
+        if (filters.minAge !== undefined && employee.age < filters.minAge) {
+          return false;
+        }
+        if (filters.maxAge !== undefined && employee.age > filters.maxAge) {
+          return false;
+        }
+
+        // スキルフィルター（OR検索）
+        if (filters.skills && filters.skills.length > 0) {
+          const hasAnySkill = filters.skills.some((skill) =>
+            employee.skills.includes(skill)
+          );
+          if (!hasAnySkill) {
+            return false;
+          }
+        }
+
+        return true;
+      });
   }
 }
 

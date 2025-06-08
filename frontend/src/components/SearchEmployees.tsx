@@ -20,6 +20,7 @@ import { EmployeeListContainer } from "./EmployeeListContainer";
 import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
 import { DetailedFilterModal } from "./DetailedFilterModal";
 import { EmployeeFilters } from "../models/Employee";
+import { ActiveFiltersDisplay } from "./ActiveFiltersDisplay";
 
 export function SearchEmployees() {
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -32,6 +33,31 @@ export function SearchEmployees() {
 
   const handleApplyFilters = (filters: EmployeeFilters) => {
     setDetailedFilters(filters);
+  };
+
+  const handleRemoveFilter = (
+    filterType: "minAge" | "maxAge" | "skills",
+    value?: string
+  ) => {
+    const newFilters = { ...detailedFilters };
+
+    if (filterType === "minAge" || filterType === "maxAge") {
+      // 年齢フィルターを削除
+      delete newFilters.minAge;
+      delete newFilters.maxAge;
+    } else if (filterType === "skills" && value) {
+      // 特定のスキルを削除
+      newFilters.skills = newFilters.skills?.filter((skill) => skill !== value);
+      if (newFilters.skills?.length === 0) {
+        delete newFilters.skills;
+      }
+    }
+
+    setDetailedFilters(newFilters);
+  };
+
+  const handleClearAllFilters = () => {
+    setDetailedFilters({});
   };
 
   return (
@@ -61,6 +87,13 @@ export function SearchEmployees() {
             詳細検索
           </Button>
         </Box>
+
+        {/* 適用中のフィルタ表示*/}
+        <ActiveFiltersDisplay
+          filters={detailedFilters}
+          onRemoveFilter={handleRemoveFilter}
+          onClearAll={handleClearAllFilters}
+        />
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {/* 並び替え用ドロップダウンを追加 */}
           <FormControl sx={{ minWidth: 200 }}>
