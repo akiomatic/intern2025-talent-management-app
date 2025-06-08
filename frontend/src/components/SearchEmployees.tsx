@@ -22,6 +22,7 @@ import { DetailedFilterModal } from "./DetailedFilterModal";
 import { EmployeeFilters } from "../models/Employee";
 import { useTranslations } from "next-intl";
 import { ActiveFiltersDisplay } from "./ActiveFiltersDisplay";
+import { CsvImporter } from "./CsvImporter";
 
 export function SearchEmployees() {
   const t = useTranslations("page.home");
@@ -135,6 +136,7 @@ export function SearchEmployees() {
           sortKey={sortKey}
           detailedFilters={detailedFilters}
         />
+        <CsvImporter /> 
       </Paper>
 
       {/*詳細検索 */}
