@@ -15,7 +15,16 @@
         "list": "List",
         "card": "Card"
       },
-      "loading": "Loading employees..."
+      "loading": "Loading employees...",
+      "sort": {
+        "title": "Sort",
+        "nameAsc": "Name (Ascending)",
+        "nameDesc": "Name (Descending)",
+        "ageAsc": "Age (Ascending)",
+        "ageDesc": "Age (Descending)",
+        "skillsDesc": "Number of Skills (Descending)",
+        "skillsAsc": "Number of Skills (Ascending)"
+      }
     },
     "employee": {
       "title": "Employee Details",

@@ -15,7 +15,16 @@
         "list": "リスト",
         "card": "カード"
       },
-      "loading": "社員一覧を読み込んでいます..."
+      "loading": "社員一覧を読み込んでいます...",
+      "sort": {
+        "title": "並び替え",
+        "nameAsc": "名前 (昇順)",
+        "nameDesc": "名前 (降順)",
+        "ageAsc": "年齢 (若い順)",
+        "ageDesc": "年齢 (高い順)",
+        "skillsDesc": "スキルの数 (多い順)",
+        "skillsAsc": "スキルの数 (少ない順)"
+      }
     },
     "employee": {
       "title": "社員詳細",

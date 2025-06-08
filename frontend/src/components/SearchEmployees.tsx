@@ -32,20 +32,20 @@ export function SearchEmployees() {
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {/* 並び替え用ドロップダウンを追加 */}
           <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel id="sort-select-label">並び替え</InputLabel>
+            <InputLabel id="sort-select-label">{t("sort.title")}</InputLabel>
             <Select
               labelId="sort-select-label"
               value={sortKey}
-              label="並び替え"
+              label={t("sort.title")}
               onChange={(e) => setSortKey(e.target.value)}
               size="small"
             >
-              <MenuItem value="name_asc">名前 (昇順)</MenuItem>
-              <MenuItem value="name_desc">名前 (降順)</MenuItem>
-              <MenuItem value="age_asc">年齢 (若い順)</MenuItem>
-              <MenuItem value="age_desc">年齢 (高い順)</MenuItem>
-              <MenuItem value="skills_desc">スキルの数 (多い順)</MenuItem>
-              <MenuItem value="skills_asc">スキルの数 (少ない順)</MenuItem>
+              <MenuItem value="name_asc">{t("sort.nameAsc")}</MenuItem>
+              <MenuItem value="name_desc">{t("sort.nameDesc")}</MenuItem>
+              <MenuItem value="age_asc">{t("sort.ageAsc")}</MenuItem>
+              <MenuItem value="age_desc">{t("sort.ageDesc")}</MenuItem>
+              <MenuItem value="skills_desc">{t("sort.skillsDesc")}</MenuItem>
+              <MenuItem value="skills_asc">{t("sort.skillsAsc")}</MenuItem>
             </Select>
           </FormControl>
 
