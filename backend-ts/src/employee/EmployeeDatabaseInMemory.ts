@@ -1,8 +1,8 @@
 import { EmployeeDatabase } from "./EmployeeDatabase";
-import { Employee } from "./Employee";
+import { Employee, EmployeeFilters } from "./Employee";
 import { randomUUID } from "crypto";
 
-type EmployeeCreationData = Omit<Employee, 'id'>;
+type EmployeeCreationData = Omit<Employee, "id">;
 
 export class EmployeeDatabaseInMemory implements EmployeeDatabase {
   private employees: Map<string, Employee>;
@@ -40,7 +40,6 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
     }
 
     return employees.filter((employee) => employee.name.includes(filterText));
-
   }
 
   async createEmployee(employeeData: EmployeeCreationData): Promise<Employee> {
@@ -52,5 +51,29 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
     this.employees.set(id, newEmployee);
     console.log("Created new employee:", newEmployee);
     return newEmployee;
+  }
+
+  async getEmployeesFiltered(filters: EmployeeFilters): Promise<Employee[]> {
+    const employees = Array.from(this.employees.values());
+
+    return employees.filter((employee) => {
+      // 年齢フィルター
+      if (filters.minAge != undefined && employee.age < filters.minAge) {
+        return false;
+      }
+      if (filters.maxAge != undefined && employee.age > filters.maxAge) {
+        return false;
+      }
+
+      if (filters.skills && filters.skills.length > 0) {
+        const hasAnySkill = filters.skills.some((skill) =>
+          employee.skills.includes(skill)
+        );
+        if (!hasAnySkill) {
+          return false;
+        }
+      }
+      return true;
+    });
   }
 }

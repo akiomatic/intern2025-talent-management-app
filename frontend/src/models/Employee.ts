@@ -8,3 +8,9 @@ export const EmployeeT = t.type({
 });
 
 export type Employee = t.TypeOf<typeof EmployeeT>;
+
+export interface EmployeeFilters {
+  minAge?: number;
+  maxAge?: number;
+  skills?: string[];
+}
