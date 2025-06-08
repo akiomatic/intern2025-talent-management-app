@@ -38,6 +38,22 @@
         "title": "Others",
         "skills": "Skills",
         "noSkills": "No skills registered."
+      },
+      "new": {
+        "form": {
+          "title": "New Employee",
+          "name": "Name",
+          "age": "Age",
+          "skills": "Skills (comma separated)",
+          "submit": "Submit",
+          "helperText": "Example: {skills}",
+          "success": "Employee added successfully.",
+          "errors": {
+            "invalidInput": "Please enter a valid name and age.",
+            "failedToCreate": "Failed to create employee: {error}",
+            "communicationError": "Communication error occurred."
+          }
+        }
       }
     }
   }

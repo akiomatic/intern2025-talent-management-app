@@ -38,6 +38,22 @@
         "title": "その他",
         "skills": "スキル",
         "noSkills": "登録されているスキルはありません。"
+      },
+      "new": {
+        "form": {
+          "title": "社員の追加",
+          "name": "名前",
+          "age": "年齢",
+          "skills": "スキル (カンマ区切り)",
+          "submit": "追加する",
+          "helperText": "例: {skills}",
+          "success": "社員が追加されました。",
+          "errors": {
+            "invalidInput": "有効な名前と年齢を入力してください。",
+            "failedToCreate": "社員の追加に失敗しました: {error}",
+            "communicationError": "通信エラーが発生しました。"
+          }
+        }
       }
     }
   }

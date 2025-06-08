@@ -2,8 +2,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
+import { useTranslations } from "next-intl";
+
+const EXAMPLES_SKILLS: string[] = ["React", "TypeScript", "AWS"];
 
 export function CreateEmployeeForm() {
+  const t = useTranslations("page.employee.new.form");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [skills, setSkills] = useState("");
@@ -22,7 +26,7 @@ export function CreateEmployeeForm() {
     };
 
     if (!name || isNaN(employeeData.age) || employeeData.age <= 0) {
-      setError("氏名と正しい年齢を入力してください。");
+      setError(t("errors.invalidInput"));
       return;
     }
 
@@ -35,44 +39,44 @@ export function CreateEmployeeForm() {
         body: JSON.stringify(employeeData),
       });
       if (response.ok) {
-        alert("社員が追加されました！");
+        alert(t("success"));
         router.push("/"); // 社員一覧ページ（ルート）にリダイレクト
         router.refresh(); // サーバーのデータを再取得して一覧を更新
       } else {
         const errorData = await response.text();
-        setError(`作成に失敗しました: ${errorData}`);
+        setError(t("errors.failedToCreate", { error: errorData }));
       }
     } catch (e) {
-      setError("通信エラーが発生しました。");
+      setError(t("errors.communicationError"));
       console.error(e);
     }
   };
 
   return (
     <Paper sx={{ p: 3 }}>
-      <Typography variant="h5" mb={2}>社員の追加</Typography>
+      <Typography variant="h5" mb={2}>{t("title")}</Typography>
       <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2}>
         <TextField
-          label="氏名"
+          label={t("name")}
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
         <TextField
-          label="年齢"
+          label={t("age")}
           type="number"
           value={age}
           onChange={(e) => setAge(e.target.value)}
           required
         />
         <TextField
-          label="スキル (カンマ区切り)"
-          helperText="例: React, TypeScript, AWS"
+          label={t("skills")}
+          helperText={t("helperText", { skills: EXAMPLES_SKILLS.join(", ") })}
           value={skills}
           onChange={(e) => setSkills(e.target.value)}
         />
         <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-          追加する
+          {t("submit")}
         </Button>
         {error && <Typography color="error" mt={2}>{error}</Typography>}
       </Box>
