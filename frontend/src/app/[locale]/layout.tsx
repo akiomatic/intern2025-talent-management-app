@@ -4,6 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Locales } from "@/const/locales";
 import { getTranslations } from "@/app/[locale]/translations";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,11 +19,11 @@ const geistMono = Geist_Mono({
 });
 
 interface GenerateMetadataProps {
-  params: Promise<{ lang: Locales }>;
+  params: Promise<{ locale: Locales }>;
 } 
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
-  const { global } = await getTranslations((await params).lang);
+  const { global } = await getTranslations((await params).locale);
   return {
     title: global.title,
     description: global.description,
@@ -29,17 +32,24 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  params: Promise<{ lang: Locales }>;
+  params: Promise<{ locale: Locales }>;
 }
 
 export default async function RootLayout({
   children,
   params,
 }: Readonly<RootLayoutProps>) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+  
   return (
-    <html lang={(await params).lang}>
+    <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+        <NextIntlClientProvider>
+          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
