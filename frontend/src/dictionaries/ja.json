@@ -24,6 +24,15 @@
         "ageDesc": "年齢 (高い順)",
         "skillsDesc": "スキルの数 (多い順)",
         "skillsAsc": "スキルの数 (少ない順)"
+      },
+      "filter": {
+        "title": "詳細検索",
+        "ageRange": "年齢範囲",
+        "minToMaxAge": "{min}歳 〜 {max}歳",
+        "skills": "スキル（いずれかを持つ）",
+        "clear": "クリア",
+        "cancel": "キャンセル",
+        "apply": "適用"
       }
     },
     "employee": {

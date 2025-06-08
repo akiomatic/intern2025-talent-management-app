@@ -14,6 +14,7 @@ import {
   Box,
 } from "@mui/material";
 import { EmployeeFilters } from "../models/Employee";
+import { useTranslations } from "next-intl";
 
 interface DetailedFilterModalProps {
   open: boolean;
@@ -31,6 +32,7 @@ export function DetailedFilterModal({
   onApply,
   initialFilters = {},
 }: DetailedFilterModalProps) {
+  const t = useTranslations("page.home.filter");
   const [ageRange, setAgeRange] = useState<number[]>([
     initialFilters.minAge ?? 20,
     initialFilters.maxAge ?? 60,
@@ -66,10 +68,10 @@ export function DetailedFilterModal({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>詳細検索</DialogTitle>
+      <DialogTitle>{t("title")}</DialogTitle>
       <DialogContent>
         <Box sx={{ mb: 4 }}>
-          <Typography gutterBottom>年齢範囲</Typography>
+          <Typography gutterBottom>{t("ageRange")}</Typography>
           <Slider
             value={ageRange}
             onChange={handleAgeChange}
@@ -85,12 +87,12 @@ export function DetailedFilterModal({
             ]}
           />
           <Typography variant="body2" color="text.secondary">
-            {ageRange[0]}歳 〜 {ageRange[1]}歳
+            {t("minToMaxAge", { min: ageRange[0], max: ageRange[1] })}
           </Typography>
         </Box>
 
         <Box>
-          <Typography gutterBottom>スキル（いずれかを持つ）</Typography>
+          <Typography gutterBottom>{t("skills")}</Typography>
           <FormGroup>
             {AVAILABLE_SKILLS.map((skill) => (
               <FormControlLabel
@@ -108,10 +110,10 @@ export function DetailedFilterModal({
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClear}>クリア</Button>
-        <Button onClick={onClose}>キャンセル</Button>
+        <Button onClick={handleClear}>{t("clear")}</Button>
+        <Button onClick={onClose}>{t("cancel")}</Button>
         <Button onClick={handleApply} variant="contained">
-          適用
+          {t("apply")}
         </Button>
       </DialogActions>
     </Dialog>

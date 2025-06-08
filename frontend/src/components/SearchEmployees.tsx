@@ -60,7 +60,7 @@ export function SearchEmployees() {
             startIcon={<FilterListIcon />}
             onClick={() => setIsModalOpen(true)}
           >
-            詳細検索
+            {t("filter.title")}
           </Button>
         </Box>
         <Box display="flex" justifyContent="space-between" alignItems="center">

@@ -24,6 +24,15 @@
         "ageDesc": "Age (Descending)",
         "skillsDesc": "Number of Skills (Descending)",
         "skillsAsc": "Number of Skills (Ascending)"
+      },
+      "filter": {
+        "title": "Detailed Search",
+        "ageRange": "Age Range",
+        "minToMaxAge": "{min} years old to {max} years old",
+        "skills": "Skills (any of)",
+        "clear": "Clear",
+        "cancel": "Cancel",
+        "apply": "Apply"
       }
     },
     "employee": {
