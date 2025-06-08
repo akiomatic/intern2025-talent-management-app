@@ -22,8 +22,8 @@ import { useTranslations } from "next-intl";
 const EXAMPLES_SKILLS: string[] = ["React", "TypeScript", "AWS"];
 
 // ★ ドロップダウンの選択肢を定義
-const workloadOptions = ["高", "中", "低"];
-const typeOptions = ["メイン", "サブ"];
+const workloadOptions = ["high", "medium", "low"];
+const typeOptions = ["main", "sub"];
 
 export function CreateEmployeeForm() {
   const t = useTranslations("page.employee.new.form");
@@ -37,7 +37,7 @@ export function CreateEmployeeForm() {
   
   const [projects, setProjects] = useState<Project[]>([
     // ★ Stateの初期値を設定
-    { projectName: "", workload: "中", role: "", type: "メイン" },
+    { projectName: "", workload: "medium", role: "", type: "main" },
   ]);
 
   const [error, setError] = useState<string | null>(null);
@@ -112,48 +112,48 @@ export function CreateEmployeeForm() {
     <Paper sx={{ p: 3 }}>
       <Typography variant="h5" mb={2}>{t("title")}</Typography>
       <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2}>
-        <TextField label="氏名" value={name} onChange={(e) => setName(e.target.value)} required />
-        <TextField label="ふりがな" value={furigana} onChange={(e) => setFurigana(e.target.value)} />
-        <TextField label="ローマ字氏名" value={nameRomaji} onChange={(e) => setNameRomaji(e.target.value)} />
-        <TextField label="所属部署" value={department} onChange={(e) => setDepartment(e.target.value)} required />
-        <TextField label="役職" value={position} onChange={(e) => setPosition(e.target.value)} required />
-        <TextField label="年齢" type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
-        <TextField label="スキル (カンマ区切り)" helperText="例: React, TypeScript, AWS" value={skills} onChange={(e) => setSkills(e.target.value)} />
+        <TextField label={t("name")} value={name} onChange={(e) => setName(e.target.value)} required />
+        <TextField label={t("furigana")} value={furigana} onChange={(e) => setFurigana(e.target.value)} />
+        <TextField label={t("nameRomaji")} value={nameRomaji} onChange={(e) => setNameRomaji(e.target.value)} />
+        <TextField label={t("department")} value={department} onChange={(e) => setDepartment(e.target.value)} required />
+        <TextField label={t("position")} value={position} onChange={(e) => setPosition(e.target.value)} required />
+        <TextField label={t("age")} type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
+        <TextField label={t("skills")} helperText={t("helperText", { skills: EXAMPLES_SKILLS.join(", ") })} value={skills} onChange={(e) => setSkills(e.target.value)} />
         
         <Divider sx={{ my: 2 }} />
 
-        <Typography variant="h6">担当プロジェクト</Typography>
+        <Typography variant="h6">{t("projects.title")}</Typography>
         {projects.map((project, index) => (
           <Paper key={index} variant="outlined" sx={{ p: 2, mt: 1, position: 'relative' }}>
             <Box display="flex" flexDirection="column" gap={2}>
-              <TextField label="プロジェクト名" value={project.projectName} onChange={(e) => handleProjectChange(index, 'projectName', e.target.value)} />
-              <TextField label="役割" value={project.role} onChange={(e) => handleProjectChange(index, 'role', e.target.value)} />
+              <TextField label={t("projects.projectName")} value={project.projectName} onChange={(e) => handleProjectChange(index, 'projectName', e.target.value)} />
+              <TextField label={t("projects.role")} value={project.role} onChange={(e) => handleProjectChange(index, 'role', e.target.value)} />
               
               {/* ★ TextFieldをSelect（ドロップダウン）に変更 */}
               <FormControl fullWidth>
-                <InputLabel id={`workload-label-${index}`}>稼働</InputLabel>
+                <InputLabel id={`workload-label-${index}`}>{t("projects.workload.title")}</InputLabel>
                 <Select
                   labelId={`workload-label-${index}`}
                   value={project.workload}
-                  label="稼働"
+                  label={t("projects.workload.title")}
                   onChange={(e) => handleProjectChange(index, 'workload', e.target.value)}
                 >
                   {workloadOptions.map(option => (
-                    <MenuItem key={option} value={option}>{option}</MenuItem>
+                    <MenuItem key={option} value={option}>{t(`projects.workload.${option}`)}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
 
               <FormControl fullWidth>
-                <InputLabel id={`type-label-${index}`}>タイプ</InputLabel>
+                <InputLabel id={`type-label-${index}`}>{t("projects.type.title")}</InputLabel>
                 <Select
                   labelId={`type-label-${index}`}
                   value={project.type}
-                  label="タイプ"
+                  label={t("projects.type.title")}
                   onChange={(e) => handleProjectChange(index, 'type', e.target.value)}
                 >
                   {typeOptions.map(option => (
-                    <MenuItem key={option} value={option}>{option}</MenuItem>
+                    <MenuItem key={option} value={option}>{t(`projects.type.${option}`)}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -167,16 +167,16 @@ export function CreateEmployeeForm() {
         ))}
 
         <Button startIcon={<AddCircleOutlineIcon />} onClick={handleAddProject} sx={{ mt: 1, alignSelf: 'flex-start' }}>
-          プロジェクトを追加
+          {t("projects.addProject")}
         </Button>
         
         {/* ★ キャンセルボタンを追加し、ボタンの配置を調整 */}
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 2 }}>
           <Button variant="outlined" onClick={() => router.push('/')}>
-            キャンセル
+            {t("cancel")}
           </Button>
           <Button type="submit" variant="contained">
-            社員を登録する
+            {t("submit")}
           </Button>
         </Box>
         {error && <Typography color="error" mt={2}>{error}</Typography>}

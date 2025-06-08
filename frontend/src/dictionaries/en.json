@@ -40,22 +40,62 @@
       "error": "Failed to load employee {id}: {error}",
       "basicInfo": {
         "title": "Basic Information",
-        "age": "Age: {age} years"
-      },
-      "others": {
-        "title": "Others",
+        "name": "Name",
+        "age": "Age: {age} years old",
+        "position": "Position",
+        "department": "Department",
         "skills": "Skills",
-        "noSkills": "No skills registered."
+        "noSkills": "No skills registered.",
+        "projects": "Projects",
+        "noProjects": "No projects registered.",
+        "workload": {
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        },
+        "type": {
+          "main": "Main",
+          "sub": "Sub"
+        }
+      },
+      "projects": {
+        "title": "Assigned Projects",
+        "projectName": "Project Name",
+        "role": "Role",
+        "workload": "Workload",
+        "type": "Type"
       },
       "new": {
         "form": {
           "title": "New Employee",
           "name": "Name",
+          "furigana": "Furigana",
+          "nameRomaji": "Name (Romaji)",
+          "position": "Position",
+          "department": "Department",
           "age": "Age",
           "skills": "Skills (comma separated)",
+          "cancel": "Cancel",
           "submit": "Submit",
           "helperText": "Example: {skills}",
           "success": "Employee added successfully.",
+          "projects": {
+            "title": "Assigned Projects",
+            "projectName": "Project Name",
+            "role": "Role",
+            "workload": {
+              "title": "Workload",
+              "high": "High",
+              "medium": "Medium",
+              "low": "Low"
+            },
+            "type": {
+              "title": "Type",
+              "main": "Main",
+              "sub": "Sub"
+            },
+            "addProject": "Add Project"
+          },
           "errors": {
             "invalidInput": "Please enter a valid name and age.",
             "failedToCreate": "Failed to create employee: {error}",

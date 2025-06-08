@@ -40,22 +40,62 @@
       "error": "社員 {id} の詳細の読み込みに失敗しました: {error}",
       "basicInfo": {
         "title": "基本情報",
-        "age": "年齢: {age}歳"
-      },
-      "others": {
-        "title": "その他",
+        "name": "名前",
+        "age": "年齢: {age}歳",
+        "position": "役職",
+        "department": "所属部署",
         "skills": "スキル",
-        "noSkills": "登録されているスキルはありません。"
+        "noSkills": "登録されているスキルはありません。",
+        "projects": "担当プロジェクト",
+        "noProjects": "担当プロジェクトはありません。",
+        "workload": {
+          "high": "高",
+          "medium": "中",
+          "low": "低"
+        },
+        "type": {
+          "main": "メイン",
+          "sub": "サブ"
+        }
+      },
+      "projects": {
+        "title": "担当プロジェクト",
+        "projectName": "プロジェクト名",
+        "role": "役割",
+        "workload": "稼働",
+        "type": "タイプ"
       },
       "new": {
         "form": {
           "title": "社員の追加",
           "name": "名前",
+          "furigana": "ふりがな",
+          "nameRomaji": "ローマ字氏名",
+          "position": "役職",
+          "department": "所属部署",
           "age": "年齢",
           "skills": "スキル (カンマ区切り)",
           "submit": "追加する",
+          "cancel": "キャンセル",
           "helperText": "例: {skills}",
           "success": "社員が追加されました。",
+          "projects": {
+            "title": "担当プロジェクト",
+            "projectName": "プロジェクト名",
+            "role": "役割",
+            "workload": {
+              "title": "稼働",
+              "high": "高",
+              "medium": "中",
+              "low": "低"
+            },
+            "type": {
+              "title": "タイプ",
+              "main": "メイン",
+              "sub": "サブ"
+            },
+            "addProject": "プロジェクトを追加"
+          },
           "errors": {
             "invalidInput": "有効な名前と年齢を入力してください。",
             "failedToCreate": "社員の追加に失敗しました: {error}",

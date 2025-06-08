@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { Chip } from "@mui/material";
 import { useTranslations } from "next-intl";
 
-type TabPanelValue = "basicInfo" | "others";
+type TabPanelValue = "basicInfo" | "projects";
 
 interface TabContentProps {
   value: TabPanelValue;
@@ -71,20 +71,20 @@ export function EmployeeDetails(prop: EmployeeDetailsProps) {
         <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
           <Tabs value={selectedTabValue} onChange={handleTabValueChange}>
             <Tab label={t("basicInfo.title")} value={"basicInfo"} />
-            <Tab label={t("others.title")} value={"others"} />
+            <Tab label={t("projects.title")} value={"projects"} />
           </Tabs>
         </Box>
 
         <TabContent value={"basicInfo"} selectedValue={selectedTabValue}>
           <Box p={2} display="flex" flexDirection="column" gap={3}>
             <Box>
-              <Typography variant="h6">基本情報</Typography>
-              <Typography>所属: {employee.department}</Typography>
-              <Typography>役職: {employee.position}</Typography>
-              <Typography>年齢: {employee.age}歳</Typography>
+              <Typography variant="h6">{t("basicInfo.title")}</Typography>
+              <Typography>{t("basicInfo.department")}: {employee.department}</Typography>
+              <Typography>{t("basicInfo.position")}: {employee.position}</Typography>
+              <Typography>{t("basicInfo.age", { age: employee.age })}</Typography>
             </Box>
             <Box>
-              <Typography variant="h6">スキル</Typography>
+              <Typography variant="h6">{t("basicInfo.skills")}</Typography>
               <Box display="flex" flexWrap="wrap" gap={1} mt={1}>
                 {employee.skills.length > 0 ? (
                   employee.skills.map((skill) => (
@@ -92,7 +92,7 @@ export function EmployeeDetails(prop: EmployeeDetailsProps) {
                   ))
                 ) : (
                   <Typography variant="body2" color="textSecondary">
-                    登録されているスキルはありません。
+                    {t("basicInfo.noSkills")}
                   </Typography>
                 )}
               </Box>
@@ -102,21 +102,21 @@ export function EmployeeDetails(prop: EmployeeDetailsProps) {
 
         <TabContent value={"projects"} selectedValue={selectedTabValue}>
           <Box p={2} display="flex" flexDirection="column" gap={1}>
-            <Typography variant="h6">担当プロジェクト</Typography>
+            <Typography variant="h6">{t("projects.title")}</Typography>
             {employee.projects.length > 0 ? (
               <List>
                 {employee.projects.map((project, index) => (
                   <ListItem key={index} disableGutters>
                     <ListItemText
                       primary={`${project.projectName} (${project.type})`}
-                      secondary={`役割: ${project.role} | 稼働: ${project.workload}`}
+                      secondary={`${t("projects.role")}: ${project.role} | ${t("projects.workload")}: ${project.workload}`}
                     />
                   </ListItem>
                 ))}
               </List>
             ) : (
               <Typography variant="body2" color="textSecondary" mt={1}>
-                担当プロジェクトはありません。
+                {t("projects.noProjects")}
               </Typography>
             )}
           </Box>
