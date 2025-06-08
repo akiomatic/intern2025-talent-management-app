@@ -3,28 +3,25 @@ import { GlobalContainer } from "@/components/GlobalContainer";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Locales } from "@/const/locales";
-import { getTranslations } from "@/app/[locale]/translations";
+import { getTranslations } from "next-intl/server";
 
 interface GenerateMetadataProps {
-  params: Promise<{ lang: Locales }>;
+  params: Promise<{ locale: Locales }>;
 } 
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
-  const { page } = await getTranslations((await params).lang);
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'page.employee' });
+  
   return {
-    title: page.employee.title,
+    title: t("title"),
   };
 }
 
-interface EmployeePageProps {
-  params: Promise<{ lang: Locales }>;
-}
-
-export default async function EmployeePage({ params }: EmployeePageProps) {
-  const lang = (await params).lang;
-  const { page } = await getTranslations(lang);
+export default async function EmployeePage() {
+  const t = await getTranslations("page.employee");
   return (
-    <GlobalContainer pageTitle={page.employee.title} lang={lang}>
+    <GlobalContainer pageTitle={t("title")}>
       {/* Mark EmployeeDetailsContainer as CSR */}
       <Suspense>
         <EmployeeDetailsContainer />
