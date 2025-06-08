@@ -20,11 +20,12 @@ interface GlobalContainerProps {
   breadcrumbs?: BreadcrumbItem[];
 }
 
-export function GlobalContainer({
+export async function GlobalContainer({
   children,
   pageTitle,
   breadcrumbs,
 }: GlobalContainerProps) {
+
   return (
     <Container
       sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}

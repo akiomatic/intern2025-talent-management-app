@@ -7,6 +7,7 @@ import { EmployeeListItem } from "./EmployeeListItem";
 import { Employee, EmployeeT, EmployeeFilters } from "../models/Employee";
 import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
 import { Grid } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 export type EmployeesContainerProps = {
   filterText: string;
@@ -30,7 +31,6 @@ const employeesFetcher = async (url: string): Promise<Employee[]> => {
   return decoded.right;
 };
 
-// 詳細フィルター用のfetcher
 const detailedEmployeesFetcher = async (
   nameFilter: string,
   filters: EmployeeFilters
@@ -64,6 +64,7 @@ export function EmployeeListContainer({
   sortKey,
   detailedFilters,
 }: EmployeesContainerProps) {
+  const t = useTranslations("page.home");
   const encodedFilterText = encodeURIComponent(filterText);
 
   const shouldUseDetailedFilter =
@@ -132,6 +133,6 @@ export function EmployeeListContainer({
     );
   }
   if (isLoading) {
-    return <p>Loading employees...</p>;
+    return <p>{t("loading")}</p>;
   }
 }

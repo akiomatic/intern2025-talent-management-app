@@ -2,7 +2,7 @@ import PersonIcon from "@mui/icons-material/Person";
 
 import { Avatar, Box, Card, CardContent, Typography } from "@mui/material";
 import { Employee } from "../models/Employee";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export type EmployeeListItemProps = {
   employee: Employee;

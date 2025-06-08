@@ -1,0 +1,116 @@
+{
+  "global": {
+    "description": "Talent + Engine (portmanteau word) is a talent management system that helps you manage your employees.",
+    "footer": {
+      "internship": "Internship",
+      "engineerRecruitment": "Engineer Recruitment"
+    }
+  },
+  "page": {
+    "home": {
+      "title": "Employee Search",
+      "searchPlaceholder": "Enter search keyword",
+      "layout": {
+        "list": "List",
+        "card": "Card"
+      },
+      "loading": "Loading employees...",
+      "sort": {
+        "title": "Sort",
+        "nameAsc": "Name (Ascending)",
+        "nameDesc": "Name (Descending)",
+        "ageAsc": "Age (Ascending)",
+        "ageDesc": "Age (Descending)",
+        "skillsDesc": "Number of Skills (Descending)",
+        "skillsAsc": "Number of Skills (Ascending)"
+      },
+      "filter": {
+        "title": "Detailed Search",
+        "ageRange": "Age Range",
+        "minToMaxAge": "{min} years old to {max} years old",
+        "skills": "Skills (any of)",
+        "clear": "Clear",
+        "cancel": "Cancel",
+        "apply": "Apply"
+      },
+      "csvImporter": {
+        "title": "CSV Import",
+        "upload": "Upload CSV File",
+        "processing": "Processing CSV...",
+        "success": "CSV import completed successfully. Success {success} items, failed {error} items",
+        "error": "CSV import failed.",
+        "noFile": "No file selected."
+      }
+    },
+    "employee": {
+      "title": "Employee Details",
+      "loading": "Loading employee {id}...",
+      "error": "Failed to load employee {id}: {error}",
+      "basicInfo": {
+        "title": "Basic Information",
+        "name": "Name",
+        "age": "Age: {age} years old",
+        "position": "Position",
+        "department": "Department",
+        "skills": "Skills",
+        "noSkills": "No skills registered.",
+        "projects": "Projects",
+        "noProjects": "No projects registered.",
+        "workload": {
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        },
+        "type": {
+          "main": "Main",
+          "sub": "Sub"
+        }
+      },
+      "projects": {
+        "title": "Assigned Projects",
+        "projectName": "Project Name",
+        "role": "Role",
+        "workload": "Workload",
+        "type": "Type"
+      },
+      "new": {
+        "form": {
+          "title": "New Employee",
+          "name": "Name",
+          "furigana": "Furigana",
+          "nameRomaji": "Name (Romaji)",
+          "position": "Position",
+          "department": "Department",
+          "age": "Age",
+          "skills": "Skills (comma separated)",
+          "cancel": "Cancel",
+          "submit": "Submit",
+          "helperText": "Example: {skills}",
+          "success": "Employee added successfully.",
+          "projects": {
+            "title": "Assigned Projects",
+            "projectName": "Project Name",
+            "role": "Role",
+            "workload": {
+              "title": "Workload",
+              "high": "High",
+              "medium": "Medium",
+              "low": "Low"
+            },
+            "type": {
+              "title": "Type",
+              "main": "Main",
+              "sub": "Sub"
+            },
+            "addProject": "Add Project"
+          },
+          "errors": {
+            "invalidInput": "Please enter a valid name and age.",
+            "failedToCreate": "Failed to create employee: {error}",
+            "communicationError": "Communication error occurred."
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,18 +5,20 @@ import Papa from "papaparse";
 import { Button, Box, Typography } from "@mui/material";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { EmployeeCreationData } from "@/models/Employee"; // 型をインポート
+import { useTranslations } from "next-intl";
 
 export function CsvImporter() {
+  const t = useTranslations("page.home.csvImporter");
   const [message, setMessage] = useState("");
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
-      setMessage("ファイルが選択されませんでした。");
+      setMessage(t("noFile"));
       return;
     }
 
-    setMessage("CSVを処理中...");
+    setMessage(t("processing"));
 
     // PapaparseでCSVを解析
     Papa.parse(file, {
@@ -60,12 +62,12 @@ export function CsvImporter() {
           }
         }
         
-        setMessage(`処理完了：成功 ${successCount}件, 失敗 ${errorCount}件`);
+        setMessage(t("success", { success: successCount, error: errorCount }));
         // 成功後、一覧を更新するためにページをリロード
         window.location.reload();
       },
       error: (error) => {
-        setMessage("CSVの解析に失敗しました。");
+        setMessage(t("error"));
         console.error(error);
       },
     });
@@ -73,13 +75,13 @@ export function CsvImporter() {
 
   return (
     <Box sx={{ my: 2, p: 2, border: '1px dashed grey', borderRadius: '4px' }}>
-      <Typography variant="h6" gutterBottom>CSVから一括登録</Typography>
+      <Typography variant="h6" gutterBottom>{t("title")}</Typography>
       <Button
         component="label"
         variant="outlined"
         startIcon={<UploadFileIcon />}
       >
-        CSVファイルを選択
+        {t("upload")}
         <input type="file" accept=".csv" hidden onChange={handleFileUpload} />
       </Button>
       {message && <Typography sx={{ mt: 1 }}>{message}</Typography>}

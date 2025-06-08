@@ -1,6 +1,7 @@
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export interface GlobalHeaderProps {
   title: string;
@@ -28,6 +29,9 @@ export function GlobalHeader({ title, pageTitle }: GlobalHeaderProps) {
               {displayTitle}
             </Typography>
           </Link>
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
+            <LanguageToggle />
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

@@ -1,7 +1,10 @@
 import { Box, Button, Paper } from "@mui/material";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export function GlobalFooter() {
+  const t = useTranslations("global.footer");
+
   return (
     <Paper
       sx={{
@@ -40,7 +43,7 @@ export function GlobalFooter() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        インターンシップ
+        {t("internship")}
       </Button>
 
       <Button
@@ -49,7 +52,7 @@ export function GlobalFooter() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        エンジニア採用
+        {t("engineerRecruitment")}
       </Button>
     </Paper>
   );
