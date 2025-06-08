@@ -15,9 +15,15 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
   };
 }
 
-export default function Home() {
+
+interface HomeProps {
+  params: Promise<{ lang: Locales }>;
+}
+
+export default async function Home({ params }: HomeProps) {
+  const { page } = await getTranslations((await params).lang);
   return (
-    <GlobalContainer pageTitle="社員検索">
+    <GlobalContainer pageTitle={page.home.title}>
       <SearchEmployees />
     </GlobalContainer>
   );
