@@ -1,5 +1,8 @@
 import { EmployeeDatabase } from "./EmployeeDatabase";
 import { Employee } from "./Employee";
+import { randomUUID } from "crypto";
+
+type EmployeeCreationData = Omit<Employee, 'id'>;
 
 export class EmployeeDatabaseInMemory implements EmployeeDatabase {
   private employees: Map<string, Employee>;
@@ -46,5 +49,16 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
         field.toLowerCase().includes(filterText.toLowerCase())
       )
     );
+  }
+
+  async createEmployee(employeeData: EmployeeCreationData): Promise<Employee> {
+    const id = randomUUID(); // 一意のIDを生成
+    const newEmployee: Employee = {
+      id: id,
+      ...employeeData, // 受け取ったデータ（名前、年齢、スキル）を展開
+    };
+    this.employees.set(id, newEmployee);
+    console.log("Created new employee:", newEmployee);
+    return newEmployee;
   }
 }

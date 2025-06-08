@@ -8,7 +8,10 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <GlobalContainer pageTitle="社員検索">
+    <GlobalContainer
+      pageTitle="社員検索"
+      breadcrumbs={[{ label: "社員検索", icon: "🏠" }]}
+    >
       <SearchEmployees />
     </GlobalContainer>
   );
