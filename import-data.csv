@@ -1,0 +1,6 @@
+name,furigana,nameRomaji,age,skills,position,department
+鈴木 健太,スズキ ケンタ,Kenta Suzuki,28,"TypeScript,React,Next.js",フロントエンドエンジニア,プロダクト開発部
+高橋 美咲,タカハシ ミサキ,Misaki Takahashi,34,"Java,Spring,MySQL",バックエンドエンジニア,基盤開発部
+伊藤 翼,イトウ ツバサ,Tsubasa Ito,25,"Python,AWS",SRE,インフラストラクチャ部
+渡辺 直樹,ワタナベ ナオキ,Naoki Watanabe,42,"Go,Kubernetes,AWS",シニアエンジニア,インフラストラクチャ部
+山本 沙織,ヤマモト サオリ,Saori Yamamoto,31,"Figma,UI/UX",UI/UXデザイナー,デザイン部

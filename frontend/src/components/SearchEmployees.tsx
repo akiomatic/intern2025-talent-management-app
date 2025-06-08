@@ -21,6 +21,7 @@ import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
 import { DetailedFilterModal } from "./DetailedFilterModal";
 import { EmployeeFilters } from "../models/Employee";
 import { ActiveFiltersDisplay } from "./ActiveFiltersDisplay";
+import { CsvImporter } from "./CsvImporter";
 
 export function SearchEmployees() {
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -133,6 +134,7 @@ export function SearchEmployees() {
           sortKey={sortKey}
           detailedFilters={detailedFilters}
         />
+        <CsvImporter /> 
       </Paper>
 
       {/*詳細検索 */}
