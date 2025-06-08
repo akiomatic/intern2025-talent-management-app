@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "タレントマネジメントシステム - 社員詳細",
+  title: "Talengine",
 };
 
 export default function EmployeePage() {

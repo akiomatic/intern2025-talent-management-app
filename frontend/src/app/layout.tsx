@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "タレントマネジメントシステム",
-  description: "シンプルなタレントマネジメントシステム",
+  title: "Talengine",
+  description: "Talent + Engine（造語）人材を“動かすエンジン”",
 };
 
 export default function RootLayout({

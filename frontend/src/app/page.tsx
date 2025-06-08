@@ -3,7 +3,7 @@ import { GlobalContainer } from "@/components/GlobalContainer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "タレントマネジメントシステム - 社員検索",
+  title: "Talengine",
 };
 
 export default function Home() {

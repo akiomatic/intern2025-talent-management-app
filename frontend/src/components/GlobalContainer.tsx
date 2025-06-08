@@ -29,10 +29,7 @@ export function GlobalContainer({
       sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <header>
-        <GlobalHeader
-          title={"タレントマネジメントシステム"}
-          pageTitle={pageTitle}
-        />
+        <GlobalHeader title={"Talengine"} pageTitle={pageTitle} />
       </header>
 
       {/* パンくずリスト */}
