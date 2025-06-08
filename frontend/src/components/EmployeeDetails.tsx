@@ -3,13 +3,9 @@ import { Avatar, Box, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { Employee } from "../models/Employee";
 import { useCallback, useState } from "react";
 import { Chip } from "@mui/material";
+import { useTranslations } from "next-intl";
 
-const tabPanelValue = {
-  basicInfo: "基本情報",
-  others: "その他",
-};
-
-type TabPanelValue = keyof typeof tabPanelValue;
+type TabPanelValue = "basicInfo" | "others";
 
 interface TabContentProps {
   value: TabPanelValue;
@@ -34,6 +30,7 @@ export type EmployeeDetailsProps = {
 };
 
 export function EmployeeDetails(prop: EmployeeDetailsProps) {
+  const t = useTranslations("page.employee");
   const [selectedTabValue, setSelectedTabValue] =
     useState<TabPanelValue>("basicInfo");
   const employee = prop.employee;
@@ -67,23 +64,23 @@ export function EmployeeDetails(prop: EmployeeDetailsProps) {
         </Box>
         <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
           <Tabs value={selectedTabValue} onChange={handleTabValueChange}>
-            <Tab label={tabPanelValue.basicInfo} value={"basicInfo"} />
-            <Tab label={tabPanelValue.others} value={"others"} />
+            <Tab label={t("basicInfo.title")} value={"basicInfo"} />
+            <Tab label={t("others.title")} value={"others"} />
           </Tabs>
         </Box>
 
         <TabContent value={"basicInfo"} selectedValue={selectedTabValue}>
           <Box p={2} display="flex" flexDirection="column" gap={1}>
-            <Typography variant="h6">基本情報</Typography>
-            <Typography>年齢：{employee.age}歳</Typography>
+            <Typography variant="h6">{t("basicInfo.title")}</Typography>
+            <Typography>{t("basicInfo.age", { age: employee.age })}</Typography>
           </Box>
         </TabContent>
 
         <TabContent value={"others"} selectedValue={selectedTabValue}>
           <Box p={2} display="flex" flexDirection="column" gap={1}>
-            <Typography variant="h6">その他</Typography>
+            <Typography variant="h6">{t("others.title")}</Typography>
             <Box>
-              <Typography variant="h6">スキル</Typography>
+              <Typography variant="h6">{t("others.skills")}</Typography>
               {employee.skills && employee.skills.length > 0 ? (
                 <Box display="flex" flexWrap="wrap" gap={1} mt={1}>
                   {employee.skills.map((skill) => (
@@ -97,7 +94,7 @@ export function EmployeeDetails(prop: EmployeeDetailsProps) {
                 </Box>
               ) : (
                 <Typography variant="body2" color="textSecondary" mt={1}>
-                  登録されているスキルはありません。
+                  {t("others.noSkills")}
                 </Typography>
               )}
             </Box>

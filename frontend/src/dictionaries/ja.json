@@ -15,7 +15,16 @@
     },
     "employee": {
       "title": "社員詳細",
-      "loading": "社員 {id} の詳細を読み込んでいます..."
+      "loading": "社員 {id} の詳細を読み込んでいます...",
+      "basicInfo": {
+        "title": "基本情報",
+        "age": "年齢: {age}歳"
+      },
+      "others": {
+        "title": "その他",
+        "skills": "スキル",
+        "noSkills": "登録されているスキルはありません。"
+      }
     }
   }
 }

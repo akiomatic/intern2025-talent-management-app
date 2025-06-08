@@ -16,7 +16,16 @@
     "employee": {
       "title": "Employee Details",
       "loading": "Loading employee {id}...",
-      "error": "Failed to load employee {id}: {error}"
+      "error": "Failed to load employee {id}: {error}",
+      "basicInfo": {
+        "title": "Basic Information",
+        "age": "Age: {age} years"
+      },
+      "others": {
+        "title": "Others",
+        "skills": "Skills",
+        "noSkills": "No skills registered."
+      }
     }
   }
 }
