@@ -18,13 +18,17 @@ export const metadata: Metadata = {
   description: "シンプルなタレントマネジメントシステム",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ lang: 'ja-JP' | 'en-US' }>;
+}
+
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<RootLayoutProps>) {
   return (
-    <html lang="ja">
+    <html lang={(await params).lang}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>
