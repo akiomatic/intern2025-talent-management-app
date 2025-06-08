@@ -16,6 +16,7 @@
     "employee": {
       "title": "社員詳細",
       "loading": "社員 {id} の詳細を読み込んでいます...",
+      "error": "社員 {id} の詳細の読み込みに失敗しました: {error}",
       "basicInfo": {
         "title": "基本情報",
         "age": "年齢: {age}歳"
