@@ -34,7 +34,6 @@ export function CreateEmployeeForm() {
         },
         body: JSON.stringify(employeeData),
       });
-      console.log("Response object:", response);
       if (response.ok) {
         alert("社員が追加されました！");
         router.push("/"); // 社員一覧ページ（ルート）にリダイレクト
