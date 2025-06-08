@@ -10,6 +10,7 @@ import { isLeft } from "fp-ts/Either";
 import { EmployeeDatabase } from "./EmployeeDatabase";
 import { Employee, EmployeeT, EmployeeFilters } from "./Employee";
 import { randomUUID } from "crypto";
+import { id } from "fp-ts/lib/Refinement";
 
 type EmployeeCreationData = Omit<Employee, "id">;
 
@@ -36,11 +37,19 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
     }
     const employee = {
       id: id,
-      name: item["name"].S,
-      furigana: item["furigana"]?.S ?? "",
-      nameRomaji: item["nameRomaji"]?.S ?? "",
-      age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
+      name: item["name"]?.S,
+      furigana: item["furigana"]?.S,
+      nameRomaji: item["nameRomaji"]?.S,
+      age: mapNullable(item["age"]?.N, (value) => parseInt(value, 10)),
       skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
+      position: item["position"]?.S,
+      department: item["department"]?.S,
+      projects: item["projects"]?.L?.map(p => ({
+        projectName: p.M?.projectName?.S ?? "",
+        workload: p.M?.workload?.S ?? "",
+        role: p.M?.role?.S ?? "",
+        type: p.M?.type?.S ?? "",
+      })) ?? [],
     };
     const decoded = EmployeeT.decode(employee);
     if (isLeft(decoded)) {
@@ -73,13 +82,21 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
       })
       .map((item) => {
         return {
-          id: item["id"].S,
-          name: item["name"].S,
-          furigana: item["furigana"]?.S ?? "",
-          nameRomaji: item["nameRomaji"]?.S ?? "",
-          age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
+          id: id,
+          name: item["name"]?.S,
+          furigana: item["furigana"]?.S,
+          nameRomaji: item["nameRomaji"]?.S,
+          age: mapNullable(item["age"]?.N, (value) => parseInt(value, 10)),
           skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
-        };
+          position: item["position"]?.S,
+          department: item["department"]?.S,
+          projects: item["projects"]?.L?.map(p => ({
+            projectName: p.M?.projectName?.S ?? "",
+            workload: p.M?.workload?.S ?? "",
+            role: p.M?.role?.S ?? "",
+            type: p.M?.type?.S ?? "",
+          })) ?? [],
+            };
       })
       .flatMap((employee) => {
         const decoded = EmployeeT.decode(employee);
@@ -109,7 +126,20 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
         id: { S: newEmployee.id },
         name: { S: newEmployee.name },
         age: { N: newEmployee.age.toString() },
-        skills: { L: newEmployee.skills.map((skill) => ({ S: skill })) },
+
+        skills: { L: newEmployee.skills.map(s => ({ S: s })) },
+        position: { S: newEmployee.position },
+        department: { S: newEmployee.department },
+        projects: { 
+          L: newEmployee.projects.map(p => ({
+            M: {
+              projectName: { S: p.projectName },
+              workload: { S: p.workload },
+              role: { S: p.role },
+              type: { S: p.type },
+            }
+          }))
+        },
       },
     };
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SERVICE_TITLE } from "@/app/const/service";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "タレントマネジメントシステム",
-  description: "シンプルなタレントマネジメントシステム",
+  title: SERVICE_TITLE,
+  description: "Talent + Engine（造語）人材を“動かすエンジン”",
 };
 
 export default function RootLayout({
