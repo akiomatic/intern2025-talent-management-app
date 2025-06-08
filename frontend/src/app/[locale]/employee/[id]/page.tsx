@@ -11,10 +11,10 @@ interface GenerateMetadataProps {
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "page.employee" });
+  const t = await getTranslations({ locale });
   
   return {
-    title: t("title"),
+    title: `${t("global.title")} - ${t("page.employee.title")}`,
   };
 }
 
