@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { SERVICE_TITLE } from "@/app/const/service";
 
 export const metadata: Metadata = {
-  title: "${SERVICE_TITLE} - 社員詳細",
+  title: "{SERVICE_TITLE} - 社員詳細",
 };
 
 export default function Home() {
