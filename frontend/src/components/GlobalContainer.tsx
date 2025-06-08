@@ -6,6 +6,7 @@ import React from "react";
 import { Breadcrumbs, Typography, Link as MuiLink } from "@mui/material";
 import Link from "next/link";
 import HomeIcon from "@mui/icons-material/Home";
+import { SERVICE_TITLE } from "@/app/const/service";
 
 interface BreadcrumbItem {
   label: string;
@@ -29,7 +30,7 @@ export function GlobalContainer({
       sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <header>
-        <GlobalHeader title={"Talengine"} pageTitle={pageTitle} />
+        <GlobalHeader title={SERVICE_TITLE} pageTitle={pageTitle} />
       </header>
 
       {/* パンくずリスト */}
