@@ -2,26 +2,33 @@ import { EmployeeDetailsContainer } from "@/components/EmployeeDetailsContainer"
 import { GlobalContainer } from "@/components/GlobalContainer";
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { Locales } from "@/const/locales";
 import { getTranslations } from "next-intl/server";
+import { routing } from "@/i18n/routing";
 
 interface GenerateMetadataProps {
-  params: Promise<{ locale: Locales }>;
+  params: Promise<{ locale: typeof routing.locales[number] }>;
 } 
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'page.employee' });
+  const t = await getTranslations({ locale, namespace: "page.employee" });
   
   return {
     title: t("title"),
   };
 }
 
-export default async function EmployeePage() {
-  const t = await getTranslations("page.employee");
+interface EmployeePageProps {
+  params: Promise<{ locale: typeof routing.locales[number] }>;
+}
+
+export default async function EmployeePage({
+  params, 
+}: EmployeePageProps) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "page.employee" });
   return (
-    <GlobalContainer pageTitle={t("title")}>
+    <GlobalContainer pageTitle={t("title")} locale={locale}>
       {/* Mark EmployeeDetailsContainer as CSR */}
       <Suspense>
         <EmployeeDetailsContainer />

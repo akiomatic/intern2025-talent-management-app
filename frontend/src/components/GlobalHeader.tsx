@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export interface GlobalHeaderProps {
   title: string;
