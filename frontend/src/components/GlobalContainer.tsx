@@ -3,24 +3,22 @@ import { VerticalSpacer } from "../components/VerticalSpacer";
 import { GlobalHeader } from "../components/GlobalHeader";
 import { GlobalFooter } from "../components/GlobalFooter";
 import React from "react";
-import { Locales } from "@/const/locales";
-import { getTranslations } from "@/app/[locale]/translations";
+import { getTranslations } from "next-intl/server";
 
 interface GlobalContainerProps {
   children?: React.ReactNode;
   pageTitle?: string;
-  lang: Locales;
 }
 
-export async function GlobalContainer({ children, pageTitle, lang }: GlobalContainerProps) {
-  const { global } = await getTranslations(lang);
+export async function GlobalContainer({ children, pageTitle }: GlobalContainerProps) {
+  const t = await getTranslations("global");
   return (
     <Container
       sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <header>
         <GlobalHeader
-          title={global.title}
+          title={t("title")}
           pageTitle={pageTitle}
         />
       </header>
