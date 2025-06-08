@@ -2,12 +2,16 @@ import {
   DynamoDBClient,
   GetItemCommand,
   GetItemCommandInput,
+  PutItemCommand,
   ScanCommand,
   ScanCommandInput,
 } from "@aws-sdk/client-dynamodb";
 import { isLeft } from "fp-ts/Either";
 import { EmployeeDatabase } from "./EmployeeDatabase";
 import { Employee, EmployeeT } from "./Employee";
+import { randomUUID } from "crypto";
+
+type EmployeeCreationData = Omit<Employee, 'id'>;
 
 export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
   private client: DynamoDBClient;
@@ -78,6 +82,29 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
           return [decoded.right];
         }
       });
+  }
+
+  async createEmployee(employeeData: EmployeeCreationData): Promise<Employee> {
+    const id = randomUUID();
+    const newEmployee: Employee = {
+      id: id,
+      ...employeeData,
+    };
+
+    const input = {
+      TableName: this.tableName,
+      Item: {
+        id: { S: newEmployee.id },
+        name: { S: newEmployee.name },
+        age: { N: newEmployee.age.toString() },
+        skills: { L: newEmployee.skills.map(skill => ({ S: skill })) },
+      },
+    };
+
+    const command = new PutItemCommand(input);
+    await this.client.send(command);
+
+    return newEmployee;
   }
 }
 
