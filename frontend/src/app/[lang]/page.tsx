@@ -1,4 +1,4 @@
-import { SearchEmployees } from "../components/SearchEmployees";
+import { SearchEmployees } from "../../components/SearchEmployees";
 import { GlobalContainer } from "@/components/GlobalContainer";
 import type { Metadata } from "next";
 
