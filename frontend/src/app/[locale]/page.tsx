@@ -1,4 +1,4 @@
-import { getTranslations } from "@/app/[lang]/translations";
+import { getTranslations } from "@/app/[locale]/translations";
 import { SearchEmployees } from "../../components/SearchEmployees";
 import { GlobalContainer } from "@/components/GlobalContainer";
 import { Locales } from "@/const/locales";

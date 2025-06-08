@@ -4,7 +4,7 @@ import { GlobalHeader } from "../components/GlobalHeader";
 import { GlobalFooter } from "../components/GlobalFooter";
 import React from "react";
 import { Locales } from "@/const/locales";
-import { getTranslations } from "@/app/[lang]/translations";
+import { getTranslations } from "@/app/[locale]/translations";
 
 interface GlobalContainerProps {
   children?: React.ReactNode;

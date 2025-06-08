@@ -3,7 +3,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Locales } from "@/const/locales";
-import { getTranslations } from "@/app/[lang]/translations";
+import { getTranslations } from "@/app/[locale]/translations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

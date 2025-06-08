@@ -3,7 +3,7 @@ import { GlobalContainer } from "@/components/GlobalContainer";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Locales } from "@/const/locales";
-import { getTranslations } from "@/app/[lang]/translations";
+import { getTranslations } from "@/app/[locale]/translations";
 
 interface GenerateMetadataProps {
   params: Promise<{ lang: Locales }>;
