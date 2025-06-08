@@ -1,5 +1,6 @@
 *.js
 !jest.config.js
+!viewer-request-function.js
 *.d.ts
 node_modules
 
