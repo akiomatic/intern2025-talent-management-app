@@ -8,6 +8,7 @@ import { Construct } from "constructs";
 import * as path from "path";
 import { backendDynamoDBTableName } from "./permanent-resources-stack";
 import { withPrefix } from "./commons";
+import * as fs from "fs"; // URL書き換え用のFunctionを読み込むために追加
 
 export class AppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -36,9 +37,17 @@ export class AppStack extends cdk.Stack {
     // Frontend
     const frontendBucket = new s3.Bucket(this, "FrontendBucket", {
       bucketName: withPrefix(this.account),
-      // The frontend bucket doesn't contain any permanent resources.
       autoDeleteObjects: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
+    // CloudFront Function for URL rewriting
+    const viewerRequestFunction = new cloudfront.Function(this, "ViewerRequestFunction", {
+      functionName: withPrefix("ViewerRequestFunction"),
+      code: cloudfront.FunctionCode.fromInline(
+        fs.readFileSync(path.join(__dirname, "viewer-request-function.js"), "utf-8")
+      ),
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
     });
 
     // CloudFront Distribution
@@ -49,29 +58,33 @@ export class AppStack extends cdk.Stack {
           originAccessLevels: [cloudfront.AccessLevel.READ],
         }),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        // 作成したURL書き換え用のFunctionを関連付ける
+        functionAssociations: [
+          {
+            function: viewerRequestFunction,
+            eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+          },
+        ],
       },
       additionalBehaviors: {
         "/api/*": {
-          origin: origins.FunctionUrlOrigin.withOriginAccessControl(
+          origin: new origins.FunctionUrlOrigin(
             backendFunction.addFunctionUrl({
-              authType: lambda.FunctionUrlAuthType.AWS_IAM,
-            })),
+              // 認証タイプを再度「NONE」に戻します
+              authType: lambda.FunctionUrlAuthType.NONE,
+              cors: {
+                allowedOrigins: ['*'], // localhost と CloudFrontドメイン両方を許可
+                allowedMethods: [lambda.HttpMethod.ALL],
+                allowedHeaders: ['*'],
+              },
+            })
+          ),
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
           cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
-          originRequestPolicy: new cloudfront.OriginRequestPolicy(this, "OriginRequestPolicy", {
-            originRequestPolicyName: withPrefix("OriginRequestPolicy"),
-            queryStringBehavior: cloudfront.OriginRequestQueryStringBehavior.all(),
-          }),
+          originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
         },
       },
-      errorResponses: [
-        {
-          httpStatus: 403,
-          responseHttpStatus: 200,
-          responsePagePath: "/",
-        },
-      ],
     });
 
     new cdk.CfnOutput(this, "FrontendBucketName", {

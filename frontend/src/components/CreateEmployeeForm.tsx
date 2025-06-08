@@ -34,8 +34,7 @@ export function CreateEmployeeForm() {
         },
         body: JSON.stringify(employeeData),
       });
-
-      if (response.status === 201) {
+      if (response.ok) {
         alert("社員が追加されました！");
         router.push("/"); // 社員一覧ページ（ルート）にリダイレクト
         router.refresh(); // サーバーのデータを再取得して一覧を更新
