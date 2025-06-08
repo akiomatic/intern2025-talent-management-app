@@ -32,6 +32,14 @@
         "clear": "クリア",
         "cancel": "キャンセル",
         "apply": "適用"
+      },
+      "csvImporter": {
+        "title": "CSVインポート",
+        "upload": "CSVファイルをアップロード",
+        "processing": "CSVを処理中...",
+        "success": "CSVのインポートが完了しました。成功 {success}件, 失敗 {error}件",
+        "error": "CSVのインポートに失敗しました。",
+        "noFile": "ファイルが選択されませんでした。"
       }
     },
     "employee": {

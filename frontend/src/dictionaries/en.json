@@ -32,6 +32,14 @@
         "clear": "Clear",
         "cancel": "Cancel",
         "apply": "Apply"
+      },
+      "csvImporter": {
+        "title": "CSV Import",
+        "upload": "Upload CSV File",
+        "processing": "Processing CSV...",
+        "success": "CSV import completed successfully. Success {success} items, failed {error} items",
+        "error": "CSV import failed.",
+        "noFile": "No file selected."
       }
     },
     "employee": {
