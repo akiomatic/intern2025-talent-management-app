@@ -5,11 +5,15 @@
   },
   "page": {
     "home": {
-      "title": "社員検索"
+      "title": "社員検索",
+      "searchPlaceholder": "検索キーワードを入力してください",
+      "layout": {
+        "list": "リスト",
+        "card": "カード"
+      }
     },
     "employee": {
       "title": "社員詳細"
-      
     }
   }
 }

@@ -3,8 +3,10 @@ import { Paper, TextField, Box, ToggleButtonGroup, ToggleButton } from "@mui/mat
 import { useState } from "react";
 import { EmployeeListContainer } from "./EmployeeListContainer";
 import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
+import { useTranslations } from "next-intl";
 
 export function SearchEmployees() {
+  const t = useTranslations("page.home");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [layout, setLayout] = useState<EmployeeListLayout>("list");
   return (
@@ -18,7 +20,7 @@ export function SearchEmployees() {
       }}
     >
       <TextField
-        placeholder="検索キーワードを入力してください"
+        placeholder={t("searchPlaceholder")}
         value={searchKeyword}
         onChange={(e) => setSearchKeyword(e.target.value)}
       />
@@ -29,8 +31,8 @@ export function SearchEmployees() {
           exclusive
           aria-label="layout"
         >
-          <ToggleButton value="list">リスト</ToggleButton>
-          <ToggleButton value="card">カード</ToggleButton>
+          <ToggleButton value="list">{t("layout.list")}</ToggleButton>
+          <ToggleButton value="card">{t("layout.card")}</ToggleButton>
         </ToggleButtonGroup>
       </Box>
       <EmployeeListContainer

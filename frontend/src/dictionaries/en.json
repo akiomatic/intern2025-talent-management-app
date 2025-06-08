@@ -5,7 +5,12 @@
   },
   "page": {
     "home": {
-      "title": "Employee Search"
+      "title": "Employee Search",
+      "searchPlaceholder": "Enter search keyword",
+      "layout": {
+        "list": "List",
+        "card": "Card"
+      }
     },
     "employee": {
       "title": "Employee Details"
