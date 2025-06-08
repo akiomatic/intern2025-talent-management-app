@@ -1,30 +1,26 @@
-import { getTranslations } from "@/app/[locale]/translations";
 import { SearchEmployees } from "../../components/SearchEmployees";
 import { GlobalContainer } from "@/components/GlobalContainer";
 import { Locales } from "@/const/locales";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 interface GenerateMetadataProps {
-  params: Promise<{ lang: Locales }>;
+  params: Promise<{ locale: Locales }>;
 } 
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
-  const { page } = await getTranslations((await params).lang);
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'page.home' });
+
   return {
-    title: page.home.title,
+    title: t("title"),
   };
 }
 
-
-interface HomeProps {
-  params: Promise<{ lang: Locales }>;
-}
-
-export default async function Home({ params }: HomeProps) {
-  const lang = (await params).lang;
-  const { page } = await getTranslations(lang);
+export default async function Home() {
+  const t = await getTranslations("page.home");
   return (
-    <GlobalContainer pageTitle={page.home.title} lang={lang}>
+    <GlobalContainer pageTitle={t("title")}>
       <SearchEmployees />
     </GlobalContainer>
   );
