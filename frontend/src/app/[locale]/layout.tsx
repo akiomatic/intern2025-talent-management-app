@@ -5,7 +5,7 @@ import "./globals.css";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Locale } from "@/types/locale";
 
 const geistSans = Geist({
@@ -47,12 +47,11 @@ export default async function RootLayout({
   }
 
   setRequestLocale(locale);
-  const messages = await getMessages();
   
   return (
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider>
           <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
         </NextIntlClientProvider>
       </body>
