@@ -16,9 +16,14 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
   };
 }
 
-export default function EmployeePage() {
+interface EmployeePageProps {
+  params: Promise<{ lang: Locales }>;
+}
+
+export default async function EmployeePage({ params }: EmployeePageProps) {
+  const { page } = await getTranslations((await params).lang);
   return (
-    <GlobalContainer pageTitle="社員詳細">
+    <GlobalContainer pageTitle={page.employee.title}>
       {/* Mark EmployeeDetailsContainer as CSR */}
       <Suspense>
         <EmployeeDetailsContainer />
