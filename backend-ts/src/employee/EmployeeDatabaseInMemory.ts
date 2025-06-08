@@ -12,26 +12,43 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
     this.employees.set("1", {
       id: "1",
       name: "Jane Doe",
-      furigana: "じぇーんどぅ",
-      nameRomaji: "Jane doe",
+      furigana: "ジェーン ドウ",
+      nameRomaji: "Jane Doe",
       age: 22,
-      skills: ["Python", "AWS"],
+      skills: ["Python", "AWS", "SQL"],
+      position: "シニアエンジニア",
+      department: "データ基盤部",
+      projects: [
+        { projectName: "データ分析基盤構築", workload: "高", role: "リードエンジニア", type: "メイン" },
+      ]
     });
     this.employees.set("2", {
       id: "2",
       name: "John Smith",
-      furigana: "じょんすみす",
-      nameRomaji: "Jone smith",
+      furigana: "ジョン スミス",
+      nameRomaji: "John Smith",
       age: 28,
-      skills: ["AWS"],
+      skills: ["AWS", "Terraform", "Go"],
+      position: "SRE",
+      department: "インフラストラクチャ部",
+      projects: [
+        { projectName: "サービス監視システム構築", workload: "高", role: "アーキテクト", type: "メイン" },
+        { projectName: "CI/CDパイプライン改善", workload: "中", role: "開発担当", type: "サブ" },
+      ]
     });
     this.employees.set("3", {
       id: "3",
       name: "山田 太郎",
-      furigana: "やまだたろう",
-      nameRomaji: "yamada taro",
+      furigana: "ヤマダ タロウ",
+      nameRomaji: "Taro Yamada",
       age: 27,
-      skills: ["React"],
+      skills: ["React", "TypeScript", "Next.js"],
+      position: "フロントエンドエンジニア",
+      department: "プロダクト開発部",
+      projects: [
+        { projectName: "新ECサイト開発", workload: "高", role: "開発担当", type: "メイン" },
+        { projectName: "デザインシステム構築", workload: "中", role: "コンポーネント設計", type: "サブ" }
+      ]
     });
   }
 
