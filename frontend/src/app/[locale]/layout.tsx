@@ -3,10 +3,10 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Locales } from "@/const/locales";
-import { getTranslations } from "@/app/[locale]/translations";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { getTranslations } from "next-intl/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,10 +23,12 @@ interface GenerateMetadataProps {
 } 
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
-  const { global } = await getTranslations((await params).locale);
+  const { locale } = await params;
+  const t = await getTranslations( { locale, namespace: 'global' } );
+
   return {
-    title: global.title,
-    description: global.description,
+    title: t("title"),
+    description: t("description"),
   };
 }
 
