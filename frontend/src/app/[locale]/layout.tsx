@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Locale } from "@/types/locale";
+import { SERVICE_TITLE } from "@/app/const/service";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
   const t = await getTranslations( { locale, namespace: 'global' } );
 
   return {
-    title: t("title"),
+    title: SERVICE_TITLE,
     description: t("description"),
   };
 }

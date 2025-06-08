@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Locale } from "@/types/locale";
 import { routing } from "@/i18n/routing";
+import { SERVICE_TITLE } from "@/app/const/service";
 
 export function generateStaticParams() {
   return routing.locales.map(locale => ({ locale }));
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
   const t = await getTranslations({ locale });
 
   return {
-    title: `${t("global.title")} - ${t("page.home.title")}`,
+    title: `${SERVICE_TITLE} - ${t("page.home.title")}`,
   };
 }
   
@@ -39,7 +40,6 @@ export default async function Home({
     <GlobalContainer
       pageTitle={t("title")}
       breadcrumbs={[{ label: t("title"), icon: "🏠" }]}
-      locale={locale}
     >
       <SearchEmployees />
     </GlobalContainer>

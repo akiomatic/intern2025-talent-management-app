@@ -1,7 +1,6 @@
 {
   "global": {
-    "title": "Talent Management System",
-    "description": "Simple Talent Management System",
+    "description": "Talent + Engine (portmanteau word) is a talent management system that helps you manage your employees.",
     "footer": {
       "internship": "Internship",
       "engineerRecruitment": "Engineer Recruitment"

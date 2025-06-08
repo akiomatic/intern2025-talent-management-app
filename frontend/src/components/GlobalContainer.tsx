@@ -6,8 +6,8 @@ import React from "react";
 // import { Link as MuiLink } from "@mui/material";
 import Link from "next/link";
 // import HomeIcon from "@mui/icons-material/Home";
-import { getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { SERVICE_TITLE } from "@/app/const/service";
+
 
 interface BreadcrumbItem {
   label: string;
@@ -19,26 +19,20 @@ interface GlobalContainerProps {
   children?: React.ReactNode;
   pageTitle?: string;
   breadcrumbs?: BreadcrumbItem[];
-  locale: typeof routing.locales[number];
 }
 
 export async function GlobalContainer({
   children,
   pageTitle,
   breadcrumbs,
-  locale,
 }: GlobalContainerProps) {
-  const t = await getTranslations({ locale, namespace: "global" });
 
   return (
     <Container
       sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <header>
-        <GlobalHeader
-          title={t("title")}
-          pageTitle={pageTitle}
-        />
+        <GlobalHeader title={SERVICE_TITLE} pageTitle={pageTitle} />
       </header>
 
       {/* パンくずリスト */}

@@ -1,7 +1,6 @@
 {
   "global": {
-    "title": "タレントマネジメントシステム",
-    "description": "シンプルなタレントマネジメントシステム",
+    "description": "Talent + Engine（造語）人材を“動かすエンジン”",
     "footer": {
       "internship": "インターンシップ",
       "engineerRecruitment": "エンジニア採用"
