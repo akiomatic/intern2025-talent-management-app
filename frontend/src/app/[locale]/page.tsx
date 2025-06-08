@@ -1,11 +1,11 @@
 import { SearchEmployees } from "../../components/SearchEmployees";
 import { GlobalContainer } from "@/components/GlobalContainer";
-import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { Locale } from "@/types/locale";
 
 interface GenerateMetadataProps {
-  params: Promise<{ locale: typeof routing.locales[number] }>;
+  params: Promise<{ locale: Locale }>;
 } 
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
 }
   
 interface HomeProps {
-  params: Promise<{ locale: typeof routing.locales[number] }>;
+    params: Promise<{ locale: Locale }>;
 }
 
 export default async function Home({

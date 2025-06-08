@@ -3,10 +3,10 @@ import { GlobalContainer } from "@/components/GlobalContainer";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { Locale } from "@/types/locale";
 
 interface GenerateMetadataProps {
-  params: Promise<{ locale: typeof routing.locales[number] }>;
+  params: Promise<{ locale: Locale }>;
 } 
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
 }
 
 interface EmployeePageProps {
-  params: Promise<{ locale: typeof routing.locales[number] }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 export default async function EmployeePage({
