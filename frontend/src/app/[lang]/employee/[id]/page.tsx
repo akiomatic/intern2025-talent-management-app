@@ -21,9 +21,10 @@ interface EmployeePageProps {
 }
 
 export default async function EmployeePage({ params }: EmployeePageProps) {
-  const { page } = await getTranslations((await params).lang);
+  const lang = (await params).lang;
+  const { page } = await getTranslations(lang);
   return (
-    <GlobalContainer pageTitle={page.employee.title}>
+    <GlobalContainer pageTitle={page.employee.title} lang={lang}>
       {/* Mark EmployeeDetailsContainer as CSR */}
       <Suspense>
         <EmployeeDetailsContainer />

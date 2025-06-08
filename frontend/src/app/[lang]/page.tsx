@@ -21,9 +21,10 @@ interface HomeProps {
 }
 
 export default async function Home({ params }: HomeProps) {
-  const { page } = await getTranslations((await params).lang);
+  const lang = (await params).lang;
+  const { page } = await getTranslations(lang);
   return (
-    <GlobalContainer pageTitle={page.home.title}>
+    <GlobalContainer pageTitle={page.home.title} lang={lang}>
       <SearchEmployees />
     </GlobalContainer>
   );
