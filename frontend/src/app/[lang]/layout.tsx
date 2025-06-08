@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Locales } from "@/const/locales";
+import { getTranslations } from "@/app/[lang]/translations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,10 +15,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "タレントマネジメントシステム",
-  description: "シンプルなタレントマネジメントシステム",
-};
+interface GenerateMetadataProps {
+  params: Promise<{ lang: Locales }>;
+} 
+
+export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
+  const { global } = await getTranslations((await params).lang);
+  return {
+    title: global.title,
+    description: global.description,
+  };
+}
 
 interface RootLayoutProps {
   children: React.ReactNode;
