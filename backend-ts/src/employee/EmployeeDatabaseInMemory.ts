@@ -10,6 +10,7 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
       id: "1",
       name: "Jane Doe",
       furigana: "じぇーんどぅ",
+      nameRomaji: "Jane doe",
       age: 22,
       skills: ["Python", "AWS"],
     });
@@ -17,6 +18,7 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
       id: "2",
       name: "John Smith",
       furigana: "じょんすみす",
+      nameRomaji: "Jone smith",
       age: 28,
       skills: ["AWS"],
     });
@@ -24,6 +26,7 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
       id: "3",
       name: "山田 太郎",
       furigana: "やまだたろう",
+      nameRomaji: "yamada taro",
       age: 27,
       skills: ["React"],
     });
@@ -39,7 +42,9 @@ export class EmployeeDatabaseInMemory implements EmployeeDatabase {
       return employees;
     }
     return employees.filter((employee) =>
-      employee.furigana.startsWith(filterText)
+      [employee.name, employee.furigana, employee.nameRomaji].some((field) =>
+        field.toLowerCase().includes(filterText.toLowerCase())
+      )
     );
   }
 }

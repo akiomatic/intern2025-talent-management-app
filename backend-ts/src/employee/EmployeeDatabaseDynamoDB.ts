@@ -33,6 +33,8 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
     const employee = {
       id: id,
       name: item["name"].S,
+      furigana: item["furigana"]?.S ?? "",
+      nameRomaji: item["nameRomaji"]?.S ?? "",
       age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
       skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
     };
@@ -56,14 +58,21 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
       return [];
     }
     return items
-      .filter(
-        (item) => (item) =>
-          filterText === "" || item["name"].S?.startsWith(filterText)
-      )
+      .filter((item) => {
+        if (filterText === "") return true;
+        const lower = filterText.toLowerCase();
+        return (
+          item["name"]?.S?.toLowerCase().includes(lower) ||
+          item["furigana"]?.S?.toLowerCase().includes(lower) ||
+          item["nameRomaji"]?.S?.toLowerCase().includes(lower)
+        );
+      })
       .map((item) => {
         return {
           id: item["id"].S,
           name: item["name"].S,
+          furigana: item["furigana"]?.S ?? "",
+          nameRomaji: item["nameRomaji"]?.S ?? "",
           age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
           skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
         };
