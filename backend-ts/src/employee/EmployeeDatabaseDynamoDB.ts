@@ -2,12 +2,16 @@ import {
   DynamoDBClient,
   GetItemCommand,
   GetItemCommandInput,
+  PutItemCommand,
   ScanCommand,
   ScanCommandInput,
 } from "@aws-sdk/client-dynamodb";
 import { isLeft } from "fp-ts/Either";
 import { EmployeeDatabase } from "./EmployeeDatabase";
 import { Employee, EmployeeT } from "./Employee";
+import { randomUUID } from "crypto";
+
+type EmployeeCreationData = Omit<Employee, 'id'>;
 
 export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
   private client: DynamoDBClient;
@@ -33,6 +37,8 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
     const employee = {
       id: id,
       name: item["name"].S,
+      furigana: item["furigana"]?.S ?? "",
+      nameRomaji: item["nameRomaji"]?.S ?? "",
       age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
       skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
     };
@@ -56,11 +62,21 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
       return [];
     }
     return items
-      .filter((item) => filterText === "" || item["name"].S === filterText)
+      .filter((item) => {
+        if (filterText === "") return true;
+        const lower = filterText.toLowerCase();
+        return (
+          item["name"]?.S?.toLowerCase().includes(lower) ||
+          item["furigana"]?.S?.toLowerCase().includes(lower) ||
+          item["nameRomaji"]?.S?.toLowerCase().includes(lower)
+        );
+      })
       .map((item) => {
         return {
           id: item["id"].S,
           name: item["name"].S,
+          furigana: item["furigana"]?.S ?? "",
+          nameRomaji: item["nameRomaji"]?.S ?? "",
           age: mapNullable(item["age"].N, (value) => parseInt(value, 10)),
           skills: item["skills"]?.L?.map((skill) => skill.S ?? "") ?? [],
         };
@@ -78,6 +94,29 @@ export class EmployeeDatabaseDynamoDB implements EmployeeDatabase {
           return [decoded.right];
         }
       });
+  }
+
+  async createEmployee(employeeData: EmployeeCreationData): Promise<Employee> {
+    const id = randomUUID();
+    const newEmployee: Employee = {
+      id: id,
+      ...employeeData,
+    };
+
+    const input = {
+      TableName: this.tableName,
+      Item: {
+        id: { S: newEmployee.id },
+        name: { S: newEmployee.name },
+        age: { N: newEmployee.age.toString() },
+        skills: { L: newEmployee.skills.map(skill => ({ S: skill })) },
+      },
+    };
+
+    const command = new PutItemCommand(input);
+    await this.client.send(command);
+
+    return newEmployee;
   }
 }
 

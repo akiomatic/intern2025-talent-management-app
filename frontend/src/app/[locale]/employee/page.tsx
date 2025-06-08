@@ -4,6 +4,11 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Locale } from "@/types/locale";
+import { routing } from "@/i18n/routing";
+
+export function generateStaticParams() {
+  return routing.locales.map(locale => ({ locale }));
+}
 
 interface GenerateMetadataProps {
   params: Promise<{ locale: Locale }>;
@@ -28,7 +33,14 @@ export default async function EmployeePage({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "page.employee" });
   return (
-    <GlobalContainer pageTitle={t("title")} locale={locale}>
+    <GlobalContainer
+      pageTitle={t("title")}
+      breadcrumbs={[
+        { label: "社員検索", href: "/", icon: "🏠" },
+        { label: "社員詳細" },
+      ]}
+      locale={locale}
+    >
       {/* Mark EmployeeDetailsContainer as CSR */}
       <Suspense>
         <EmployeeDetailsContainer />

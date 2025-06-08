@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import useSWR from "swr";
 import * as t from "io-ts";
 import { isLeft } from "fp-ts/Either";
@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 export type EmployeesContainerProps = {
   filterText: string;
   layout: EmployeeListLayout;
+  sortKey: string;
 };
 
 const EmployeesT = t.array(EmployeeT);
@@ -29,28 +30,56 @@ const employeesFetcher = async (url: string): Promise<Employee[]> => {
   return decoded.right;
 };
 
-export function EmployeeListContainer({ filterText, layout }: EmployeesContainerProps) {
+export function EmployeeListContainer({ filterText, layout, sortKey }: EmployeesContainerProps) {
   const t = useTranslations("page.home");
   const encodedFilterText = encodeURIComponent(filterText);
   const { data, error, isLoading } = useSWR<Employee[], Error>(
     `/api/employees?filterText=${encodedFilterText}`,
     employeesFetcher
   );
+
+  // useMemoを使って、dataかsortKeyが変更された時だけ並び替えを実行
+  const sortedData = useMemo(() => {
+    // APIからデータがまだ返ってきていない場合は空配列を返す
+    if (!data) {
+      return [];
+    }
+    // 元のdata配列を直接変更しないようにコピーを作成
+    const newEmployees = [...data];
+    newEmployees.sort((a, b) => {
+      const [key, direction] = sortKey.split("_");
+      const isAsc = direction === "asc";
+      const order = isAsc ? 1 : -1;
+
+      switch (key) {
+        case "name":
+          return a.name.localeCompare(b.name) * order;
+        case "age":
+          return (a.age - b.age) * order;
+        case "skills":
+          return (a.skills.length - b.skills.length) * order;
+        default:
+          return 0;
+      }
+    });
+    return newEmployees;
+  }, [data, sortKey]);
+
   useEffect(() => {
     if (error != null) {
       console.error(`Failed to fetch employees filtered by filterText`, error);
     }
   }, [error, filterText]);
   if (data != null) {
+    // 表示する際には、元の `data` の代わりにソート済みの `sortedData` を使う
     if (layout === "list") {
-      return data.map((employee) => (
+      return sortedData.map((employee) => (
         <EmployeeListItem employee={employee} key={employee.id} />
-      ));   
+      ));
     }
-
     return (
       <Grid container spacing={2}>
-        {data.map((employee) => (
+        {sortedData.map((employee) => (
           <Grid key={employee.id} size={{ xs: 6, md: 4 }}>
             <EmployeeListItem employee={employee} />
           </Grid>

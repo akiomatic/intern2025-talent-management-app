@@ -3,7 +3,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  // Proxy API calls for development
+  // Settings for single page app
+  output: "export", // Depends on how we deploy the app
+  // Proxy API calls in case of SPA.
   async rewrites() {
     return [
       {
