@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 import { EmployeeListContainer } from "./EmployeeListContainer";
 import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
