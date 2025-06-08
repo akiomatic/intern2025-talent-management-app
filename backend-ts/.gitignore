@@ -42,3 +42,7 @@ next-env.d.ts
 
 # Lambda layers
 layers/*
+
+*.zip
+# macOS system files
+.DS_Store

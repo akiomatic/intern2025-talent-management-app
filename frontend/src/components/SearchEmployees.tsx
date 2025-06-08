@@ -1,10 +1,25 @@
 "use client";
-import { Paper, TextField, Box, ToggleButtonGroup, ToggleButton, FormControl, InputLabel, Select, MenuItem, Fab, } from "@mui/material";
+import {
+  Paper,
+  TextField,
+  Box,
+  ToggleButtonGroup,
+  ToggleButton,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Fab,
+  Button,
+} from "@mui/material";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import { useState } from "react";
 import { EmployeeListContainer } from "./EmployeeListContainer";
 import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
+import { DetailedFilterModal } from "./DetailedFilterModal";
+import { EmployeeFilters } from "../models/Employee";
 import { useTranslations } from "next-intl";
 
 export function SearchEmployees() {
@@ -13,6 +28,14 @@ export function SearchEmployees() {
   const [layout, setLayout] = useState<EmployeeListLayout>("list");
   // 並び替えの条件を管理するstate。初期値は「名前 (昇順)」
   const [sortKey, setSortKey] = useState("name_asc");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detailedFilters, setDetailedFilters] = useState<EmployeeFilters>({});
+
+  const handleApplyFilters = (filters: EmployeeFilters) => {
+    setDetailedFilters(filters);
+  };
+
   return (
     <>
       <Paper
@@ -24,11 +47,22 @@ export function SearchEmployees() {
           p: 2,
         }}
       >
-        <TextField
-          placeholder={t("searchPlaceholder")}
-          value={searchKeyword}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-        />
+        {/* 検索エリア */}
+        <Box display="flex" gap={1}>
+          <TextField
+            placeholder={t("searchPlaceholder")}
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            sx={{ flex: 1 }}
+          />
+          <Button
+            variant="outlined"
+            startIcon={<FilterListIcon />}
+            onClick={() => setIsModalOpen(true)}
+          >
+            詳細検索
+          </Button>
+        </Box>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {/* 並び替え用ドロップダウンを追加 */}
           <FormControl sx={{ minWidth: 200 }}>
@@ -51,7 +85,9 @@ export function SearchEmployees() {
 
           <ToggleButtonGroup
             value={layout}
-            onChange={(_, value) => setLayout(value as unknown as EmployeeListLayout)}
+            onChange={(_, value) =>
+              setLayout(value as unknown as EmployeeListLayout)
+            }
             exclusive
             aria-label="layout"
           >
@@ -64,16 +100,26 @@ export function SearchEmployees() {
           filterText={searchKeyword}
           layout={layout}
           sortKey={sortKey}
+          detailedFilters={detailedFilters}
         />
       </Paper>
+
+      {/*詳細検索 */}
+      <DetailedFilterModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onApply={handleApplyFilters}
+        initialFilters={detailedFilters}
+      />
+
       <Link href="/employee/new" passHref>
         <Fab
           color="primary"
           aria-label="add"
           sx={{
-            position: 'fixed', // 画面に固定
-            bottom: 32,      // 下から32px
-            right: 32,       // 右から32px
+            position: "fixed", // 画面に固定
+            bottom: 32, // 下から32px
+            right: 32, // 右から32px
           }}
         >
           <AddIcon />

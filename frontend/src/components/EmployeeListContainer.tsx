@@ -4,7 +4,7 @@ import useSWR from "swr";
 import * as t from "io-ts";
 import { isLeft } from "fp-ts/Either";
 import { EmployeeListItem } from "./EmployeeListItem";
-import { Employee, EmployeeT } from "../models/Employee";
+import { Employee, EmployeeT, EmployeeFilters } from "../models/Employee";
 import { type EmployeeListLayout } from "@/types/EmployeeListLayout";
 import { Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -13,6 +13,7 @@ export type EmployeesContainerProps = {
   filterText: string;
   layout: EmployeeListLayout;
   sortKey: string;
+  detailedFilters: EmployeeFilters;
 };
 
 const EmployeesT = t.array(EmployeeT);
@@ -30,12 +31,56 @@ const employeesFetcher = async (url: string): Promise<Employee[]> => {
   return decoded.right;
 };
 
-export function EmployeeListContainer({ filterText, layout, sortKey }: EmployeesContainerProps) {
+const detailedEmployeesFetcher = async (
+  nameFilter: string,
+  filters: EmployeeFilters
+): Promise<Employee[]> => {
+  const response = await fetch("/api/employees/filtered", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: nameFilter,
+      ...filters,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch filtered employees`);
+  }
+
+  const body = await response.json();
+  const decoded = EmployeesT.decode(body);
+  if (isLeft(decoded)) {
+    throw new Error(`Failed to decode employees ${JSON.stringify(body)}`);
+  }
+  return decoded.right;
+};
+
+export function EmployeeListContainer({
+  filterText,
+  layout,
+  sortKey,
+  detailedFilters,
+}: EmployeesContainerProps) {
   const t = useTranslations("page.home");
   const encodedFilterText = encodeURIComponent(filterText);
+
+  const shouldUseDetailedFilter =
+    detailedFilters.minAge != undefined ||
+    detailedFilters.maxAge != undefined ||
+    (detailedFilters.skills && detailedFilters.skills.length > 0);
+
   const { data, error, isLoading } = useSWR<Employee[], Error>(
-    `/api/employees?filterText=${encodedFilterText}`,
-    employeesFetcher
+    shouldUseDetailedFilter
+      ? `filtered-employees-${encodedFilterText}-${JSON.stringify(
+          detailedFilters
+        )}`
+      : `/api/employees?filterText=${encodedFilterText}`,
+    shouldUseDetailedFilter
+      ? () => detailedEmployeesFetcher(filterText, detailedFilters)
+      : employeesFetcher
   );
 
   // useMemoを使って、dataかsortKeyが変更された時だけ並び替えを実行

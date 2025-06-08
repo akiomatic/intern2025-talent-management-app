@@ -3,9 +3,9 @@ import { VerticalSpacer } from "../components/VerticalSpacer";
 import { GlobalHeader } from "../components/GlobalHeader";
 import { GlobalFooter } from "../components/GlobalFooter";
 import React from "react";
-import { Breadcrumbs, Typography, Link as MuiLink } from "@mui/material";
+// import { Link as MuiLink } from "@mui/material";
 import Link from "next/link";
-import HomeIcon from "@mui/icons-material/Home";
+// import HomeIcon from "@mui/icons-material/Home";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 
